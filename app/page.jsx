@@ -1,44 +1,36 @@
 "use client";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
-const NAV_LINKS = ["Services", "About", "Process", "Contact"];
+const NAV_LINKS = ["About", "Process", "Contact"];
+
+const SERVICE_SLUGS = {
+  "Mobile Applications": "mobile-applications",
+  "Web Applications": "web-applications",
+  "Data & AI Services": "data-ai-services",
+};
 
 const SERVICES = [
   {
     icon: "◈",
-    title: "Data Services",
-    desc: "End-to-end data solutions — pipelines, warehousing, BI dashboards, and analytics that drive smarter decisions.",
-    tags: ["Data Engineering", "BI & Analytics", "ETL Pipelines"],
+    title: "Mobile Applications",
+    desc: "Native and cross-platform apps for iOS and Android — built for performance and a polished user experience.",
+    tags: ["React Native", "Flutter", "iOS & Android"],
+    image: "",
   },
   {
     icon: "⬡",
-    title: "Web Development",
+    title: "Web Applications",
     desc: "Scalable, high-performance web applications built with modern frameworks — fast, secure, and SEO-ready.",
     tags: ["Next.js / React", "Node.js", "REST & GraphQL"],
-  },
-  {
-    icon: "◇",
-    title: "UI / UX Design",
-    desc: "User-centered design that converts. Intuitive interfaces, design systems, and prototypes balancing beauty with usability.",
-    tags: ["Figma Prototypes", "Design Systems", "User Research"],
+    image: "",
   },
   {
     icon: "⬢",
-    title: "Mobile App Development",
-    desc: "Native and cross-platform apps for iOS and Android — built for performance and a polished user experience.",
-    tags: ["React Native", "Flutter", "iOS & Android"],
-  },
-  {
-    icon: "⬟",
-    title: "AI Chatbot & Agents",
-    desc: "Custom AI-powered chatbots and autonomous agents for customer support, lead generation, and workflow automation.",
-    tags: ["LLM Integration", "RAG Systems", "Workflow Automation"],
-  },
-  {
-    icon: "✦",
-    title: "Graphics Designing",
-    desc: "Striking visuals that tell your brand story — logos, brand identities, social media creatives, and marketing materials.",
-    tags: ["Brand Identity", "Logo Design", "Social Media"],
+    title: "Data & AI Services",
+    desc: "End-to-end data solutions and AI-powered chatbots that drive smarter decisions and automate workflows.",
+    tags: ["Data Engineering", "LLM Integration", "BI & Analytics"],
+    image: "",
   },
 ];
 
@@ -65,7 +57,7 @@ const ABOUT_CARDS = [
 
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
-  const [activeService, setActiveService] = useState(0);
+  const [servicesOpen, setServicesOpen] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [sent, setSent] = useState(false);
 
@@ -102,6 +94,35 @@ export default function Home() {
           Nexlytic <span style={{ color: "#6366f1" }}>Solutions</span>
         </span>
         <div style={{ display: "flex", gap: 28, alignItems: "center" }}>
+          <div style={{ position: "relative" }}
+            onMouseEnter={() => setServicesOpen(true)}
+            onMouseLeave={() => setServicesOpen(false)}>
+            <button onClick={() => scrollTo("services")} style={{
+              background: "none", border: "none", color: servicesOpen ? "#fff" : "#a0a0a0",
+              fontSize: 14, cursor: "pointer", transition: "color 0.2s",
+            }}>
+              Services
+            </button>
+            <div style={{
+              position: "absolute", top: "100%", left: "50%", transform: servicesOpen ? "translateX(-50%) translateY(0)" : "translateX(-50%) translateY(-4px)",
+              marginTop: 8, background: "#111", border: "1px solid #1f1f1f",
+              borderRadius: 12, padding: "8px 0", minWidth: 240, opacity: servicesOpen ? 1 : 0,
+              pointerEvents: servicesOpen ? "auto" : "none", transition: "opacity 0.2s, transform 0.2s",
+            }}>
+              {SERVICES.map((s) => (
+                <Link key={s.title} href={`/services/${SERVICE_SLUGS[s.title]}`} style={{
+                  display: "flex", alignItems: "center", gap: 12,
+                  padding: "10px 20px", color: "#a0a0a0", textDecoration: "none",
+                  transition: "all 0.15s",
+                }}
+                  onMouseEnter={e => { e.currentTarget.style.background = "#1a1a1a"; e.currentTarget.style.color = "#fff"; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#a0a0a0"; }}>
+                  <span style={{ fontSize: 16, color: "#6366f1" }}>{s.icon}</span>
+                  <span style={{ fontSize: 14 }}>{s.title}</span>
+                </Link>
+              ))}
+            </div>
+          </div>
           {NAV_LINKS.map((l) => (
             <button key={l} onClick={() => scrollTo(l.toLowerCase())} style={{
               background: "none", border: "none", color: "#a0a0a0",
@@ -199,26 +220,55 @@ export default function Home() {
             A complete suite of digital services to take your product from concept to scale.
           </p>
           <div style={{
-            display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))",
-            gap: 1, background: "#1a1a1a", borderRadius: 16, overflow: "hidden",
+            display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+            gap: 24,
           }}>
             {SERVICES.map((s, i) => (
-              <div key={i} onClick={() => setActiveService(i)} style={{
-                padding: "28px 24px",
-                background: activeService === i ? "#111" : "#0d0d0d",
-                borderLeft: activeService === i ? "2px solid #6366f1" : "2px solid transparent",
-                cursor: "pointer", transition: "all 0.2s",
-              }}>
-                <div style={{ fontSize: 22, color: "#6366f1", marginBottom: 14 }}>{s.icon}</div>
-                <h3 style={{ fontSize: 16, fontWeight: 600, color: "#fff", marginBottom: 8 }}>{s.title}</h3>
-                <p style={{ fontSize: 13, color: "#555", lineHeight: 1.7, marginBottom: 14 }}>{s.desc}</p>
-                <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
-                  {s.tags.map((t) => (
-                    <span key={t} style={{
-                      fontSize: 11, padding: "3px 10px", borderRadius: 100,
-                      background: "#1a1a2e", color: "#6366f1", border: "1px solid #2a2a4a",
-                    }}>{t}</span>
-                  ))}
+              <div key={i} style={{
+                background: "#0d0d0d", border: "1px solid #1a1a1a",
+                borderRadius: 16, overflow: "hidden", transition: "border-color 0.2s",
+              }}
+                onMouseEnter={e => e.currentTarget.style.borderColor = "#6366f1"}
+                onMouseLeave={e => e.currentTarget.style.borderColor = "#1a1a1a"}>
+                <div style={{
+                  aspectRatio: "16/9", background: "#111",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  borderBottom: "1px solid #1a1a1a",
+                }}>
+                  {/* Add your image here */}
+                  <span style={{ color: "#333", fontSize: 14 }}>Add image</span>
+                </div>
+                <div style={{ padding: "24px" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
+                    <span style={{ fontSize: 20, color: "#6366f1" }}>{s.icon}</span>
+                    <h3 style={{ fontSize: 18, fontWeight: 600, color: "#fff" }}>{s.title}</h3>
+                  </div>
+                  <p style={{ fontSize: 14, color: "#555", lineHeight: 1.7, marginBottom: 16 }}>{s.desc}</p>
+                  <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 20 }}>
+                    {s.tags.map((t) => (
+                      <span key={t} style={{
+                        fontSize: 11, padding: "3px 10px", borderRadius: 100,
+                        background: "#1a1a2e", color: "#6366f1", border: "1px solid #2a2a4a",
+                      }}>{t}</span>
+                    ))}
+                  </div>
+                  <div style={{ display: "flex", gap: 10 }}>
+                    <Link href={`/services/${SERVICE_SLUGS[s.title]}`} style={{
+                      background: "#6366f1", color: "#fff", border: "none",
+                      borderRadius: 8, padding: "10px 22px", fontSize: 13,
+                      fontWeight: 600, cursor: "pointer", textDecoration: "none",
+                    }}>
+                      Read More →
+                    </Link>
+                    <Link href="/#contact" style={{
+                      background: "transparent", color: "#a0a0a0",
+                      border: "1px solid #2a2a2a", borderRadius: 8,
+                      padding: "10px 22px", fontSize: 13, fontWeight: 500,
+                      cursor: "pointer", textDecoration: "none",
+                    }}>
+                      Contact Us
+                    </Link>
+                  </div>
                 </div>
               </div>
             ))}
