@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 
 const NAV_LINKS = ["About", "Process", "Contact"];
@@ -48,12 +48,189 @@ const STATS = [
   { val: "15+", label: "Expert Team Members" },
 ];
 
-const ABOUT_CARDS = [
-  { title: "Client-First", desc: "Your success is our metric. Every decision aligned with your business outcomes." },
-  { title: "Agile Delivery", desc: "Iterative sprints and transparent communication keep projects on track." },
-  { title: "Cutting-Edge Stack", desc: "We use the latest tools and frameworks — no legacy baggage." },
-  { title: "Post-Launch Care", desc: "We don't disappear after go-live. Long-term support is in our DNA." },
+const WHY_CHOOSE = [
+  { icon: "⚡", title: "Speed to Market", desc: "We ship fast without cutting corners. Your MVP in weeks, not quarters." },
+  { icon: "🔒", title: "Production-Grade Code", desc: "Scalable, tested, and maintainable — built to handle real users from day one." },
+  { icon: "🎯", title: "Business-First Thinking", desc: "We don't just write code. We solve business problems with technology." },
+  { icon: "🤝", title: "Transparent Partnership", desc: "Weekly demos, shared boards, and direct access to your dev team." },
+  { icon: "🚀", title: "Scale-Ready Architecture", desc: "Systems designed to grow with you — from 100 to 100,000 users." },
+  { icon: "🛠️", title: "Long-Term Support", desc: "We stay after launch. Maintenance, updates, and new features — always available." },
 ];
+
+const MILESTONES = [
+  { year: "2026", title: "Founded in Karachi", desc: "Started with a 3-person team and a vision to build intelligent digital products." },
+];
+
+const VALUES = [
+  { label: "Integrity", desc: "Honest timelines, clear pricing, no surprises." },
+  { label: "Excellence", desc: "We don't ship until it meets our standard." },
+  { label: "Innovation", desc: "Always exploring better ways to build and deliver." },
+  { label: "Ownership", desc: "We treat your product like our own." },
+];
+
+function AnimatedAboutHero() {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+  const [activeValue, setActiveValue] = useState(null);
+  const [counts, setCounts] = useState({ projects: 0, satisfaction: 0, years: 0, team: 0 });
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
+      { threshold: 0.2 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!visible) return;
+    const duration = 2000;
+    const steps = 60;
+    const interval = duration / steps;
+    let step = 0;
+    const timer = setInterval(() => {
+      step++;
+      const progress = Math.min(step / steps, 1);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      setCounts({
+        projects: Math.round(50 * ease),
+        satisfaction: Math.round(98 * ease),
+        years: Math.round(5 * ease),
+        team: Math.round(15 * ease),
+      });
+      if (step >= steps) clearInterval(timer);
+    }, interval);
+    return () => clearInterval(timer);
+  }, [visible]);
+
+  return (
+    <div ref={ref} style={{ maxWidth: 1100, margin: "0 auto" }}>
+      {/* ── Floating Background Orbs ── */}
+      <div style={{ position: "absolute", top: "10%", left: "5%", width: 300, height: 300, borderRadius: "50%", background: "radial-gradient(circle, rgba(99,102,241,0.06) 0%, transparent 70%)", pointerEvents: "none", animation: "float1 8s ease-in-out infinite" }} />
+      <div style={{ position: "absolute", bottom: "15%", right: "8%", width: 400, height: 400, borderRadius: "50%", background: "radial-gradient(circle, rgba(99,102,241,0.04) 0%, transparent 70%)", pointerEvents: "none", animation: "float2 10s ease-in-out infinite" }} />
+
+      {/* ── Header Row ── */}
+      <div style={{ textAlign: "center", marginBottom: 64, opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)", transition: "all 0.8s ease" }}>
+        <p style={{ fontSize: 11, letterSpacing: "0.15em", color: "#6366f1", textTransform: "uppercase", marginBottom: 16 }}>Who We Are</p>
+        <h2 style={{ fontSize: "clamp(2rem,5vw,3.4rem)", fontWeight: 800, color: "#fff", letterSpacing: "-2px", lineHeight: 1.1, marginBottom: 20 }}>
+          We Build Products<br />That <span style={{ color: "#6366f1", position: "relative" }}>
+            Move Markets
+            <span style={{ position: "absolute", bottom: -4, left: 0, right: 0, height: 3, background: "#6366f1", borderRadius: 2, opacity: 0.4 }} />
+          </span>
+        </h2>
+        <p style={{ color: "#555", fontSize: 16, maxWidth: 560, lineHeight: 1.8, margin: "0 auto" }}>
+          Nexlytic Solutions is a full-service digital agency based in Karachi, Pakistan. We partner with startups and enterprises to design, build, and scale high-impact digital products.
+        </p>
+      </div>
+
+      {
+      //  ── Animated Stats Row ──
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 2, background: "#1a1a1a", borderRadius: 16, overflow: "hidden", marginBottom: 64, opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)", transition: "all 0.8s ease 0.2s" }}>
+        {[
+          { val: `${counts.projects}+`, label: "Projects Delivered", icon: "◈" },
+          { val: `${counts.satisfaction}%`, label: "Client Satisfaction", icon: "⬡" },
+          { val: `${counts.years}+`, label: "Years Experience", icon: "⬢" },
+          { val: `${counts.team}+`, label: "Expert Team Members", icon: "⬟" },
+        ].map((s, i) => (
+          <div key={i} style={{
+            padding: "28px 20px", background: "#0d0d0d", textAlign: "center",
+            transition: "all 0.3s", cursor: "default",
+          }}
+            onMouseEnter={e => { e.currentTarget.style.background = "#111"; e.currentTarget.style.transform = "scale(1.02)"; }}
+            onMouseLeave={e => { e.currentTarget.style.background = "#0d0d0d"; e.currentTarget.style.transform = "scale(1)"; }}>
+            <div style={{ fontSize: 18, color: "#6366f1", marginBottom: 8 }}>{s.icon}</div>
+            <div style={{ fontSize: 32, fontWeight: 800, color: "#fff", letterSpacing: "-1px", lineHeight: 1 }}>{s.val}</div>
+            <div style={{ fontSize: 12, color: "#555", marginTop: 6 }}>{s.label}</div>
+          </div>
+        ))}
+      </div>
+      }
+
+      {/* ── Content + Interactive Value Cards ── */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 72, alignItems: "start", marginBottom: 64 }}>
+        {/* ── Left: Text + CTA ── */}
+        <div style={{ opacity: visible ? 1 : 0, transform: visible ? "translateX(0)" : "translateX(-30px)", transition: "all 0.8s ease 0.3s" }}>
+          <div style={{ position: "relative", marginBottom: 32 }}>
+            <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 3, background: "linear-gradient(180deg, #6366f1 0%, transparent 100%)", borderRadius: 2 }} />
+            <p style={{ color: "#808080", fontSize: 16, lineHeight: 1.9, paddingLeft: 20 }}>
+              Our multidisciplinary team combines <span style={{ color: "#fff", fontWeight: 600 }}>deep technical expertise</span> with <span style={{ color: "#fff", fontWeight: 600 }}>creative thinking</span> — delivering solutions that are not just functional, but <span style={{ color: "#6366f1", fontWeight: 600 }}>exceptional</span>.
+            </p>
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+            <button onClick={() => scrollTo("contact")} style={{
+              background: "#6366f1", color: "#fff",
+              border: "none", borderRadius: 10,
+              padding: "14px 32px", fontSize: 15, fontWeight: 600,
+              cursor: "pointer", transition: "all 0.3s",
+              boxShadow: "0 0 20px rgba(99,102,241,0.3)",
+            }}
+              onMouseEnter={e => { e.target.style.background = "#4f46e5"; e.target.style.transform = "translateY(-3px)"; e.target.style.boxShadow = "0 0 30px rgba(99,102,241,0.5)"; }}
+              onMouseLeave={e => { e.target.style.background = "#6366f1"; e.target.style.transform = "translateY(0)"; e.target.style.boxShadow = "0 0 20px rgba(99,102,241,0.3)"; }}>
+              Let's Work Together
+            </button>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, color: "#555", fontSize: 13 }}>
+              <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#4ade80", boxShadow: "0 0 8px rgba(74,222,128,0.4)" }} />
+              Available for new projects
+            </div>
+          </div>
+        </div>
+
+        {/* ── Right: Value Cards ── */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, opacity: visible ? 1 : 0, transform: visible ? "translateX(0)" : "translateX(30px)", transition: "all 0.8s ease 0.4s" }}>
+          {VALUES.map((v, i) => (
+            <div key={v.label}
+              onMouseEnter={() => setActiveValue(i)}
+              onMouseLeave={() => setActiveValue(null)}
+              style={{
+                background: activeValue === i ? "linear-gradient(135deg, rgba(99,102,241,0.08) 0%, rgba(99,102,241,0.02) 100%)" : "#0f0f0f",
+                border: `1px solid ${activeValue === i ? "rgba(99,102,241,0.4)" : "#1a1a1a"}`,
+                borderRadius: 16, padding: "24px 20px", cursor: "default",
+                transition: "all 0.4s ease", position: "relative", overflow: "hidden",
+                transform: activeValue === i ? "translateY(-4px)" : "translateY(0)",
+                boxShadow: activeValue === i ? "0 8px 32px rgba(99,102,241,0.15)" : "none",
+              }}>
+              {/* Top glow line */}
+              <div style={{
+                position: "absolute", top: 0, left: "20%", right: "20%", height: 1,
+                background: "linear-gradient(90deg, transparent 0%, #6366f1 50%, transparent 100%)",
+                opacity: activeValue === i ? 1 : 0, transition: "opacity 0.4s",
+              }} />
+              {/* Animated icon area */}
+              <div style={{
+                width: 44, height: 44, borderRadius: 12,
+                background: activeValue === i ? "#6366f1" : "#111",
+                border: `1px solid ${activeValue === i ? "#6366f1" : "#1a1a1a"}`,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                marginBottom: 16, transition: "all 0.4s ease",
+                fontSize: 18,
+              }}>
+                {activeValue === i ? (
+                  <span style={{ color: "#fff", fontSize: 20 }}>
+                    {i === 0 ? "✦" : i === 1 ? "◆" : i === 2 ? "⬡" : "◈"}
+                  </span>
+                ) : (
+                  <span style={{ color: "#333", fontSize: 14, fontWeight: 700 }}>0{i + 1}</span>
+                )}
+              </div>
+              <div style={{ fontSize: 15, fontWeight: 700, color: activeValue === i ? "#fff" : "#ccc", marginBottom: 8, transition: "color 0.3s" }}>{v.label}</div>
+              <div style={{ fontSize: 12, color: activeValue === i ? "#808080" : "#3a3a3a", lineHeight: 1.7, transition: "color 0.3s" }}>
+                {v.desc}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ── Animated Gradient Divider ── */}
+      <div style={{
+        height: 2, borderRadius: 2, marginBottom: 64,
+        background: "linear-gradient(90deg, transparent 0%, #6366f1 50%, transparent 100%)",
+        opacity: visible ? 0.3 : 0, transition: "opacity 1s ease 0.6s",
+      }} />
+    </div>
+  );
+}
 
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
@@ -276,42 +453,58 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── ABOUT ── */}
-      <section id="about" style={{ padding: "100px 5%", background: "#080808" }}>
-        <div style={{
-          maxWidth: 1100, margin: "0 auto",
-          display: "grid", gridTemplateColumns: "1fr 1fr", gap: 72, alignItems: "center",
-        }}>
-          <div>
-            <p style={{ fontSize: 11, letterSpacing: "0.15em", color: "#6366f1", textTransform: "uppercase", marginBottom: 12 }}>Who We Are</p>
-            <h2 style={{ fontSize: "clamp(1.8rem,4vw,2.6rem)", fontWeight: 700, color: "#fff", letterSpacing: "-1px", marginBottom: 24 }}>
-              Built for Businesses That Think Ahead
-            </h2>
-            <p style={{ color: "#555", fontSize: 14, lineHeight: 1.9, marginBottom: 18 }}>
-              Nexlytic Solutions is a full-service digital agency based in Karachi, Pakistan. We partner with startups and enterprises to design, build, and scale high-impact digital products.
-            </p>
-            <p style={{ color: "#555", fontSize: 14, lineHeight: 1.9, marginBottom: 32 }}>
-              Our multidisciplinary team combines deep technical expertise with creative thinking — delivering solutions that are not just functional, but exceptional.
-            </p>
-            <button onClick={() => scrollTo("contact")} style={{
-              background: "transparent", color: "#6366f1",
-              border: "1px solid #6366f1", borderRadius: 8,
-              padding: "11px 24px", fontSize: 14, fontWeight: 500,
-              cursor: "pointer", transition: "all 0.2s",
-            }}
-              onMouseEnter={e => { e.target.style.background = "#6366f1"; e.target.style.color = "#fff"; }}
-              onMouseLeave={e => { e.target.style.background = "transparent"; e.target.style.color = "#6366f1"; }}>
-              Let's Work Together
-            </button>
+      {/* ── ABOUT: HERO ── */}
+      <section id="about" style={{ padding: "100px 5%", background: "#080808", position: "relative", overflow: "hidden" }}>
+        <AnimatedAboutHero />
+      </section>
+
+      {/* ── ABOUT: WHY CHOOSE US ── */}
+      <section style={{ padding: "100px 5%", background: "#080808" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <p style={{ fontSize: 11, letterSpacing: "0.15em", color: "#6366f1", textTransform: "uppercase", marginBottom: 12 }}>Why Nexlytic</p>
+          <h2 style={{ fontSize: "clamp(1.8rem,4vw,2.6rem)", fontWeight: 700, color: "#fff", letterSpacing: "-1px", marginBottom: 52 }}>
+            Why Clients Choose Us
+          </h2>
+          <div style={{
+            display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+            gap: 1, background: "#1a1a1a", borderRadius: 16, overflow: "hidden",
+          }}>
+            {WHY_CHOOSE.map((item) => (
+              <div key={item.title} style={{
+                padding: "28px 24px", background: "#0d0d0d",
+                transition: "all 0.2s", cursor: "default",
+              }}
+                onMouseEnter={e => { e.currentTarget.style.background = "#111"; e.currentTarget.style.transform = "translateY(-2px)"; }}
+                onMouseLeave={e => { e.currentTarget.style.background = "#0d0d0d"; e.currentTarget.style.transform = "none"; }}>
+                <div style={{ fontSize: 24, marginBottom: 14 }}>{item.icon}</div>
+                <h3 style={{ fontSize: 16, fontWeight: 600, color: "#fff", marginBottom: 8 }}>{item.title}</h3>
+                <p style={{ fontSize: 13, color: "#555", lineHeight: 1.7 }}>{item.desc}</p>
+              </div>
+            ))}
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
-            {ABOUT_CARDS.map((c) => (
-              <div key={c.title} style={{
-                background: "#0f0f0f", border: "1px solid #1a1a1a",
-                borderRadius: 12, padding: "18px 16px",
-              }}>
-                <div style={{ fontSize: 13, fontWeight: 600, color: "#fff", marginBottom: 6 }}>{c.title}</div>
-                <div style={{ fontSize: 12, color: "#444", lineHeight: 1.7 }}>{c.desc}</div>
+        </div>
+      </section>
+
+      {/* ── ABOUT: TIMELINE ── */}
+      <section style={{ padding: "100px 5%" }}>
+        <div style={{ maxWidth: 900, margin: "0 auto" }}>
+          <p style={{ fontSize: 11, letterSpacing: "0.15em", color: "#6366f1", textTransform: "uppercase", marginBottom: 12 }}>Our Journey</p>
+          <h2 style={{ fontSize: "clamp(1.8rem,4vw,2.6rem)", fontWeight: 700, color: "#fff", letterSpacing: "-1px", marginBottom: 52 }}>
+            How We Got Here
+          </h2>
+          <div style={{ position: "relative", paddingLeft: 32 }}>
+            <div style={{ position: "absolute", left: 11, top: 0, bottom: 0, width: 2, background: "#1a1a1a" }} />
+            {MILESTONES.map((m, i) => (
+              <div key={i} style={{ position: "relative", paddingBottom: 48 }}>
+                <div style={{
+                  position: "absolute", left: -32, top: 4,
+                  width: 12, height: 12, borderRadius: "50%",
+                  background: i === MILESTONES.length - 1 ? "#6366f1" : "#1a1a1a",
+                  border: `2px solid ${i === MILESTONES.length - 1 ? "#6366f1" : "#2a2a2a"}`,
+                }} />
+                <span style={{ fontSize: 12, fontWeight: 700, color: "#6366f1", letterSpacing: "0.05em" }}>{m.year}</span>
+                <h3 style={{ fontSize: 17, fontWeight: 600, color: "#fff", margin: "6px 0 8px" }}>{m.title}</h3>
+                <p style={{ fontSize: 13, color: "#555", lineHeight: 1.7, maxWidth: 500 }}>{m.desc}</p>
               </div>
             ))}
           </div>
