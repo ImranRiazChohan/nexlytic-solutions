@@ -124,7 +124,7 @@ function AnimatedAboutHero() {
         </p>
       </div>
 
-      {
+      {/* {
       //  ── Animated Stats Row ──
       <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 2, background: "#1a1a1a", borderRadius: 16, overflow: "hidden", marginBottom: 64, opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)", transition: "all 0.8s ease 0.2s" }}>
         {[
@@ -145,7 +145,7 @@ function AnimatedAboutHero() {
           </div>
         ))}
       </div>
-      }
+      } */}
 
       {/* ── Content + Interactive Value Cards ── */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 72, alignItems: "start", marginBottom: 64 }}>
@@ -228,6 +228,146 @@ function AnimatedAboutHero() {
         background: "linear-gradient(90deg, transparent 0%, #6366f1 50%, transparent 100%)",
         opacity: visible ? 0.3 : 0, transition: "opacity 1s ease 0.6s",
       }} />
+    </div>
+  );
+}
+
+function AnimatedProcess() {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+  const [activeStep, setActiveStep] = useState(0);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
+      { threshold: 0.2 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  const steps = [
+    { num: "01", title: "Discovery", desc: "We dive deep into your business goals, users, and technical requirements to craft a clear roadmap.", icon: "🔍", duration: "Week 1–2", deliverables: ["Project scope doc", "Technical requirements", "Timeline & milestones"] },
+    { num: "02", title: "Design", desc: "Wireframes, prototypes, and design systems built for your brand — reviewed and refined with your team.", icon: "🎨", duration: "Week 2–4", deliverables: ["Wireframes & user flows", "Interactive prototypes", "Design system"] },
+    { num: "03", title: "Development", desc: "Clean, scalable code delivered in agile sprints with continuous communication and progress updates.", icon: "⚙️", duration: "Week 4–10", deliverables: ["Weekly builds", "Code reviews", "CI/CD pipeline"] },
+    { num: "04", title: "Launch & Support", desc: "We deploy, monitor, and iterate — ensuring your product performs flawlessly after go-live.", icon: "🚀", duration: "Week 10+", deliverables: ["Production deployment", "Monitoring setup", "Post-launch support"] },
+  ];
+
+  return (
+    <div ref={ref} style={{ maxWidth: 1100, margin: "0 auto", position: "relative" }}>
+      {/* ── Background glow ── */}
+      <div style={{ position: "absolute", top: "20%", left: "50%", transform: "translateX(-50%)", width: 600, height: 600, borderRadius: "50%", background: "radial-gradient(circle, rgba(99,102,241,0.05) 0%, transparent 70%)", pointerEvents: "none" }} />
+
+      {/* ── Header ── */}
+      <div style={{ textAlign: "center", marginBottom: 72, opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)", transition: "all 0.8s ease" }}>
+        <p style={{ fontSize: 11, letterSpacing: "0.15em", color: "#6366f1", textTransform: "uppercase", marginBottom: 16 }}>How We Work</p>
+        <h2 style={{ fontSize: "clamp(2rem,5vw,3rem)", fontWeight: 800, color: "#fff", letterSpacing: "-2px", lineHeight: 1.1 }}>
+          From Idea to <span style={{ color: "#6366f1" }}>Launch</span>
+        </h2>
+        <p style={{ color: "#555", fontSize: 16, maxWidth: 500, lineHeight: 1.7, margin: "16px auto 0" }}>
+          A proven 4-step process that turns your vision into a polished, production-ready product.
+        </p>
+      </div>
+
+      {/* ── Roadmap Timeline ── */}
+      <div style={{ position: "relative" }}>
+        {/* ── Central road line ── */}
+        <div style={{ position: "absolute", left: "50%", top: 0, bottom: 0, width: 2, background: "#1a1a1a", transform: "translateX(-50%)" }} />
+        {/* ── Animated progress line ── */}
+        <div style={{
+          position: "absolute", left: "50%", top: 0,
+          width: 2, height: visible ? "100%" : 0,
+          background: "linear-gradient(180deg, #6366f1 0%, #6366f1 50%, transparent 100%)",
+          transform: "translateX(-50%)", transition: "height 1.5s ease 0.5s",
+        }} />
+
+        {steps.map((step, i) => (
+          <div key={i} style={{
+            display: "flex", alignItems: "center",
+            marginBottom: 32, position: "relative",
+            opacity: visible ? 1 : 0,
+            transform: visible ? "translateY(0)" : "translateY(30px)",
+            transition: `all 0.6s ease ${0.3 + i * 0.2}s`,
+          }}>
+            {/* ── Left card (even) or Right card (odd) ── */}
+            <div style={{ width: "calc(50% - 40px)", order: i % 2 === 0 ? 1 : 3 }}>
+              <div
+                onClick={() => setActiveStep(activeStep === i ? -1 : i)}
+                style={{
+                  background: activeStep === i ? "linear-gradient(135deg, rgba(99,102,241,0.1) 0%, #0d0d0d 100%)" : "#0d0d0d",
+                  border: `1px solid ${activeStep === i ? "rgba(99,102,241,0.4)" : "#1a1a1a"}`,
+                  borderRadius: 16, padding: "28px 24px", cursor: "pointer",
+                  transition: "all 0.4s ease", position: "relative", overflow: "hidden",
+                  transform: activeStep === i ? "translateY(-4px)" : "translateY(0)",
+                  boxShadow: activeStep === i ? "0 8px 32px rgba(99,102,241,0.12)" : "none",
+                  textAlign: i % 2 === 0 ? "right" : "left",
+                }}>
+                {/* Top glow */}
+                <div style={{
+                  position: "absolute", top: 0, left: "15%", right: "15%", height: 1,
+                  background: "linear-gradient(90deg, transparent 0%, #6366f1 50%, transparent 100%)",
+                  opacity: activeStep === i ? 1 : 0, transition: "opacity 0.4s",
+                }} />
+
+                <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 12, justifyContent: i % 2 === 0 ? "flex-end" : "flex-start" }}>
+                  <span style={{ fontSize: 28 }}>{step.icon}</span>
+                  <div>
+                    <div style={{ fontSize: 11, color: "#6366f1", fontWeight: 600, letterSpacing: "0.05em" }}>{step.duration}</div>
+                    <h3 style={{ fontSize: 18, fontWeight: 700, color: "#fff", margin: 0 }}>{step.title}</h3>
+                  </div>
+                </div>
+                <p style={{ fontSize: 14, color: "#555", lineHeight: 1.7, marginBottom: activeStep === i ? 16 : 0, transition: "margin 0.3s" }}>{step.desc}</p>
+
+                {/* Expandable deliverables */}
+                <div style={{
+                  maxHeight: activeStep === i ? 200 : 0, overflow: "hidden",
+                  transition: "max-height 0.5s ease, opacity 0.3s",
+                  opacity: activeStep === i ? 1 : 0,
+                }}>
+                  <p style={{ fontSize: 11, color: "#333", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 10 }}>Deliverables</p>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: i % 2 === 0 ? "flex-end" : "flex-start" }}>
+                    {step.deliverables.map((d) => (
+                      <div key={d} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                        {i % 2 !== 0 && <div style={{ width: 5, height: 5, borderRadius: "50%", background: "#6366f1", flexShrink: 0 }} />}
+                        <span style={{ fontSize: 13, color: "#808080" }}>{d}</span>
+                        {i % 2 === 0 && <div style={{ width: 5, height: 5, borderRadius: "50%", background: "#6366f1", flexShrink: 0 }} />}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* ── Center dot ── */}
+            <div style={{
+              position: "absolute", left: "50%", transform: "translateX(-50%)",
+              width: 18, height: 18, borderRadius: "50%",
+              background: activeStep === i ? "#6366f1" : "#1a1a1a",
+              border: `2px solid ${activeStep === i ? "#6366f1" : "#2a2a2a"}`,
+              zIndex: 2, transition: "all 0.4s ease",
+              boxShadow: activeStep === i ? "0 0 16px rgba(99,102,241,0.5)" : "none",
+            }}>
+              {activeStep === i && (
+                <div style={{
+                  position: "absolute", top: "50%", left: "50%",
+                  width: 18, height: 18, borderRadius: "50%",
+                  border: "2px solid #6366f1",
+                  animation: "pulseRing 1.5s ease-out infinite",
+                }} />
+              )}
+              <div style={{
+                width: 6, height: 6, borderRadius: "50%",
+                background: activeStep === i ? "#fff" : "#333",
+                position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)",
+                transition: "all 0.4s ease",
+              }} />
+            </div>
+
+            {/* ── Spacer ── */}
+            <div style={{ width: "calc(50% - 40px)", order: i % 2 === 0 ? 3 : 1 }} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -512,24 +652,8 @@ export default function Home() {
       </section>
 
       {/* ── PROCESS ── */}
-      <section id="process" style={{ padding: "100px 5%" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <p style={{ fontSize: 11, letterSpacing: "0.15em", color: "#6366f1", textTransform: "uppercase", marginBottom: 12 }}>How We Work</p>
-          <h2 style={{ fontSize: "clamp(1.8rem,4vw,2.6rem)", fontWeight: 700, color: "#fff", letterSpacing: "-1px", marginBottom: 48 }}>Our Process</h2>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 2 }}>
-            {PROCESS.map((p, i) => (
-              <div key={i} style={{
-                padding: "28px 22px", background: "#0d0d0d", border: "1px solid #1a1a1a",
-                borderRadius: i === 0 ? "12px 0 0 12px" : i === PROCESS.length - 1 ? "0 12px 12px 0" : 0,
-              }}>
-                <div style={{ fontSize: 34, fontWeight: 800, color: "#1e1e1e", marginBottom: 14, letterSpacing: "-1px" }}>{p.num}</div>
-                <div style={{ width: 28, height: 2, background: "#6366f1", borderRadius: 2, marginBottom: 14 }} />
-                <h3 style={{ fontSize: 15, fontWeight: 600, color: "#fff", marginBottom: 8 }}>{p.title}</h3>
-                <p style={{ fontSize: 13, color: "#444", lineHeight: 1.7 }}>{p.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+      <section id="process" style={{ padding: "100px 5%", background: "#080808", position: "relative", overflow: "hidden" }}>
+        <AnimatedProcess />
       </section>
 
       {/* ── CTA BANNER ── */}
