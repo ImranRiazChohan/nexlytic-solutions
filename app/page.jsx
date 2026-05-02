@@ -68,6 +68,130 @@ const VALUES = [
   { label: "Ownership", desc: "We treat your product like our own." },
 ];
 
+function WhyChooseUs() {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+  const [hoveredCard, setHoveredCard] = useState(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
+      { threshold: 0.15 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  const reasons = [
+    { icon: "⚡", title: "Speed to Market", desc: "We ship fast without cutting corners. Your MVP in weeks, not quarters.", metric: "3×", metricLabel: "faster delivery than industry avg", color: "#f59e0b" },
+    { icon: "🔒", title: "Production-Grade Code", desc: "Scalable, tested, and maintainable — built to handle real users from day one.", metric: "99.9%", metricLabel: "uptime across all deployed apps", color: "#6366f1" },
+    { icon: "🎯", title: "Business-First Thinking", desc: "We don't just write code. We solve business problems with technology.", metric: "ROI", metricLabel: "focused — every feature ties to a business goal", color: "#10b981" },
+    { icon: "🤝", title: "Transparent Partnership", desc: "Weekly demos, shared boards, and direct access to your dev team.", metric: "24h", metricLabel: "max response time on all projects", color: "#0ea5e9" },
+    { icon: "🚀", title: "Scale-Ready Architecture", desc: "Systems designed to grow with you — from 100 to 100,000 users.", metric: "100×", metricLabel: "scalability built into every architecture", color: "#8b5cf6" },
+    { icon: "🛠️", title: "Long-Term Support", desc: "We stay after launch. Maintenance, updates, and new features — always available.", metric: "98%", metricLabel: "of clients retain us post-launch", color: "#ef4444" },
+  ];
+
+  return (
+    <div ref={ref} style={{ maxWidth: 1100, margin: "0 auto", position: "relative" }}>
+      {/* Background glow */}
+      <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: 700, height: 700, borderRadius: "50%", background: "radial-gradient(circle, rgba(99,102,241,0.04) 0%, transparent 70%)", pointerEvents: "none" }} />
+
+      {/* Header */}
+      <div style={{ textAlign: "center", marginBottom: 72, opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)", transition: "all 0.8s ease" }}>
+        <p style={{ fontSize: 11, letterSpacing: "0.15em", color: "#6366f1", textTransform: "uppercase", marginBottom: 16 }}>Why Nexlytic</p>
+        <h2 style={{ fontSize: "clamp(2rem,5vw,3rem)", fontWeight: 800, color: "#fff", letterSpacing: "-2px", lineHeight: 1.1 }}>
+          Why Clients <span style={{ color: "#6366f1" }}>Choose Us</span>
+        </h2>
+        <p style={{ color: "#555", fontSize: 16, maxWidth: 520, lineHeight: 1.7, margin: "16px auto 0" }}>
+          Not just developers — partners who care about your business outcomes.
+        </p>
+      </div>
+
+      {/* Grid */}
+      <div style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(3, 1fr)",
+        gap: 16,
+      }}>
+        {reasons.map((r, i) => {
+          const isHovered = hoveredCard === i;
+
+          return (
+            <div
+              key={i}
+              onMouseEnter={() => setHoveredCard(i)}
+              onMouseLeave={() => setHoveredCard(null)}
+              style={{
+                background: isHovered ? "linear-gradient(135deg, rgba(99,102,241,0.08) 0%, #0d0d0d 100%)" : "#0d0d0d",
+                border: `1px solid ${isHovered ? "rgba(99,102,241,0.3)" : "#1a1a1a"}`,
+                borderRadius: 20,
+                padding: "32px 28px",
+                cursor: "default",
+                transition: `all 0.4s ease`,
+                transform: isHovered ? "translateY(-6px)" : "translateY(0)",
+                boxShadow: isHovered ? "0 12px 40px rgba(99,102,241,0.15)" : "none",
+                position: "relative",
+                overflow: "hidden",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                minHeight: 220,
+                opacity: visible ? 1 : 0,
+                transform: visible ? (isHovered ? "translateY(-6px)" : "translateY(0)") : "translateY(40px)",
+                transition: `all 0.6s ease ${0.1 + i * 0.1}s`,
+              }}>
+              {/* Top accent line */}
+              <div style={{
+                position: "absolute", top: 0, left: "20%", right: "20%", height: 2,
+                background: `linear-gradient(90deg, transparent 0%, ${r.color} 50%, transparent 100%)`,
+                opacity: isHovered ? 1 : 0, transition: "opacity 0.4s",
+              }} />
+              {/* Corner glow */}
+              <div style={{
+                position: "absolute", top: -40, right: -40, width: 120, height: 120,
+                borderRadius: "50%", background: `radial-gradient(circle, ${r.color}15 0%, transparent 70%)`,
+                opacity: isHovered ? 1 : 0, transition: "opacity 0.4s", pointerEvents: "none",
+              }} />
+
+              <div>
+                {/* Icon + Title row */}
+                <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 16 }}>
+                  <div style={{
+                    width: 48, height: 48, borderRadius: 14,
+                    background: isHovered ? `${r.color}20` : "#111",
+                    border: `1px solid ${isHovered ? `${r.color}40` : "#1a1a1a"}`,
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    fontSize: 22, transition: "all 0.4s ease",
+                  }}>
+                    {r.icon}
+                  </div>
+                  <h3 style={{ fontSize: 17, fontWeight: 700, color: isHovered ? "#fff" : "#ccc", transition: "color 0.3s" }}>{r.title}</h3>
+                </div>
+
+                <p style={{ fontSize: 14, color: isHovered ? "#808080" : "#444", lineHeight: 1.8 }}>
+                  {r.desc}
+                </p>
+              </div>
+
+              {/* Metric badge */}
+              <div style={{
+                display: "inline-flex", alignItems: "center", gap: 12,
+                background: `${r.color}10`, border: `1px solid ${r.color}25`,
+                borderRadius: 12, padding: "10px 16px", marginTop: 20,
+                opacity: isHovered ? 1 : 0, transform: isHovered ? "translateY(0)" : "translateY(8px)",
+                transition: "all 0.4s ease 0.1s",
+              }}>
+                <span style={{ fontSize: 20, fontWeight: 800, color: r.color, letterSpacing: "-1px" }}>{r.metric}</span>
+                <span style={{ fontSize: 12, color: "#808080", lineHeight: 1.5 }}>{r.metricLabel}</span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 function AnimatedAboutHero() {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
@@ -600,29 +724,7 @@ export default function Home() {
 
       {/* ── ABOUT: WHY CHOOSE US ── */}
       <section style={{ padding: "100px 5%", background: "#080808" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <p style={{ fontSize: 11, letterSpacing: "0.15em", color: "#6366f1", textTransform: "uppercase", marginBottom: 12 }}>Why Nexlytic</p>
-          <h2 style={{ fontSize: "clamp(1.8rem,4vw,2.6rem)", fontWeight: 700, color: "#fff", letterSpacing: "-1px", marginBottom: 52 }}>
-            Why Clients Choose Us
-          </h2>
-          <div style={{
-            display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-            gap: 1, background: "#1a1a1a", borderRadius: 16, overflow: "hidden",
-          }}>
-            {WHY_CHOOSE.map((item) => (
-              <div key={item.title} style={{
-                padding: "28px 24px", background: "#0d0d0d",
-                transition: "all 0.2s", cursor: "default",
-              }}
-                onMouseEnter={e => { e.currentTarget.style.background = "#111"; e.currentTarget.style.transform = "translateY(-2px)"; }}
-                onMouseLeave={e => { e.currentTarget.style.background = "#0d0d0d"; e.currentTarget.style.transform = "none"; }}>
-                <div style={{ fontSize: 24, marginBottom: 14 }}>{item.icon}</div>
-                <h3 style={{ fontSize: 16, fontWeight: 600, color: "#fff", marginBottom: 8 }}>{item.title}</h3>
-                <p style={{ fontSize: 13, color: "#555", lineHeight: 1.7 }}>{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+        <WhyChooseUs />
       </section>
 
       {/* ── ABOUT: TIMELINE ── */}
