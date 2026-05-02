@@ -197,6 +197,9 @@ function AnimatedAboutHero() {
   const [visible, setVisible] = useState(false);
   const [activeValue, setActiveValue] = useState(null);
   const [counts, setCounts] = useState({ projects: 0, satisfaction: 0, years: 0, team: 0 });
+  const [rotatingWord, setRotatingWord] = useState("Markets");
+
+  const words = ["Markets", "Industries", "Startups", "Enterprises"];
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -228,60 +231,57 @@ function AnimatedAboutHero() {
     return () => clearInterval(timer);
   }, [visible]);
 
+  useEffect(() => {
+    if (!visible) return;
+    let idx = 0;
+    const timer = setInterval(() => {
+      idx = (idx + 1) % words.length;
+      setRotatingWord(words[idx]);
+    }, 2500);
+    return () => clearInterval(timer);
+  }, [visible]);
+
+  const techs = ["React", "Next.js", "Node.js", "Python", "Flutter", "React Native", "TypeScript", "TensorFlow", "AWS", "Docker", "PostgreSQL", "MongoDB"];
+
   return (
     <div ref={ref} style={{ maxWidth: 1100, margin: "0 auto" }}>
       {/* ── Floating Background Orbs ── */}
-      <div style={{ position: "absolute", top: "10%", left: "5%", width: 300, height: 300, borderRadius: "50%", background: "radial-gradient(circle, rgba(99,102,241,0.06) 0%, transparent 70%)", pointerEvents: "none", animation: "float1 8s ease-in-out infinite" }} />
-      <div style={{ position: "absolute", bottom: "15%", right: "8%", width: 400, height: 400, borderRadius: "50%", background: "radial-gradient(circle, rgba(99,102,241,0.04) 0%, transparent 70%)", pointerEvents: "none", animation: "float2 10s ease-in-out infinite" }} />
+      <div style={{ position: "absolute", top: "5%", left: "2%", width: 400, height: 400, borderRadius: "50%", background: "radial-gradient(circle, rgba(99,102,241,0.06) 0%, transparent 70%)", pointerEvents: "none", animation: "float1 8s ease-in-out infinite" }} />
+      <div style={{ position: "absolute", bottom: "10%", right: "5%", width: 500, height: 500, borderRadius: "50%", background: "radial-gradient(circle, rgba(99,102,241,0.04) 0%, transparent 70%)", pointerEvents: "none", animation: "float2 10s ease-in-out infinite" }} />
 
-      {/* ── Header Row ── */}
-      <div style={{ textAlign: "center", marginBottom: 64, opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)", transition: "all 0.8s ease" }}>
-        <p style={{ fontSize: 11, letterSpacing: "0.15em", color: "#6366f1", textTransform: "uppercase", marginBottom: 16 }}>Who We Are</p>
-        <h2 style={{ fontSize: "clamp(2rem,5vw,3.4rem)", fontWeight: 800, color: "#fff", letterSpacing: "-2px", lineHeight: 1.1, marginBottom: 20 }}>
-          We Build Products<br />That <span style={{ color: "#6366f1", position: "relative" }}>
-            Move Markets
-            <span style={{ position: "absolute", bottom: -4, left: 0, right: 0, height: 3, background: "#6366f1", borderRadius: 2, opacity: 0.4 }} />
+      {/* ── Header ── */}
+      <div style={{ textAlign: "center", marginBottom: 56, opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)", transition: "all 0.8s ease" }}>
+        <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "#111", border: "1px solid #2a2a2a", borderRadius: 100, padding: "6px 16px", fontSize: 13, color: "#a0a0a0", marginBottom: 24 }}>
+          <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#6366f1" }} />
+          About Nexlytic Solutions
+        </div>
+        <h2 style={{ fontSize: "clamp(2.2rem,5.5vw,3.6rem)", fontWeight: 800, color: "#fff", letterSpacing: "-2px", lineHeight: 1.1, marginBottom: 20 }}>
+          We Build Products<br />That Move{" "}
+          <span style={{ color: "#6366f1", position: "relative", display: "inline-block", minWidth: 200, textAlign: "left" }}>
+            {rotatingWord}
+            <span style={{ position: "absolute", bottom: -2, left: 0, right: 0, height: 4, background: "linear-gradient(90deg, #6366f1, transparent)", borderRadius: 2 }} />
           </span>
         </h2>
-        <p style={{ color: "#555", fontSize: 16, maxWidth: 560, lineHeight: 1.8, margin: "0 auto" }}>
-          Nexlytic Solutions is a full-service digital agency based in Karachi, Pakistan. We partner with startups and enterprises to design, build, and scale high-impact digital products.
+        <p style={{ color: "#606060", fontSize: 17, maxWidth: 600, lineHeight: 1.8, margin: "0 auto" }}>
+          A Karachi-based digital agency building data-driven web apps, mobile experiences, and AI agents that help businesses scale smarter and move faster.
         </p>
       </div>
 
-      {/* {
-      //  ── Animated Stats Row ──
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 2, background: "#1a1a1a", borderRadius: 16, overflow: "hidden", marginBottom: 64, opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)", transition: "all 0.8s ease 0.2s" }}>
-        {[
-          { val: `${counts.projects}+`, label: "Projects Delivered", icon: "◈" },
-          { val: `${counts.satisfaction}%`, label: "Client Satisfaction", icon: "⬡" },
-          { val: `${counts.years}+`, label: "Years Experience", icon: "⬢" },
-          { val: `${counts.team}+`, label: "Expert Team Members", icon: "⬟" },
-        ].map((s, i) => (
-          <div key={i} style={{
-            padding: "28px 20px", background: "#0d0d0d", textAlign: "center",
-            transition: "all 0.3s", cursor: "default",
-          }}
-            onMouseEnter={e => { e.currentTarget.style.background = "#111"; e.currentTarget.style.transform = "scale(1.02)"; }}
-            onMouseLeave={e => { e.currentTarget.style.background = "#0d0d0d"; e.currentTarget.style.transform = "scale(1)"; }}>
-            <div style={{ fontSize: 18, color: "#6366f1", marginBottom: 8 }}>{s.icon}</div>
-            <div style={{ fontSize: 32, fontWeight: 800, color: "#fff", letterSpacing: "-1px", lineHeight: 1 }}>{s.val}</div>
-            <div style={{ fontSize: 12, color: "#555", marginTop: 6 }}>{s.label}</div>
-          </div>
-        ))}
-      </div>
-      } */}
 
       {/* ── Content + Interactive Value Cards ── */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 72, alignItems: "start", marginBottom: 64 }}>
-        {/* ── Left: Text + CTA ── */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 72, alignItems: "start", marginBottom: 72 }}>
+        {/* ── Left: Rich Content ── */}
         <div style={{ opacity: visible ? 1 : 0, transform: visible ? "translateX(0)" : "translateX(-30px)", transition: "all 0.8s ease 0.3s" }}>
           <div style={{ position: "relative", marginBottom: 32 }}>
             <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 3, background: "linear-gradient(180deg, #6366f1 0%, transparent 100%)", borderRadius: 2 }} />
-            <p style={{ color: "#808080", fontSize: 16, lineHeight: 1.9, paddingLeft: 20 }}>
+            <p style={{ color: "#808080", fontSize: 16, lineHeight: 1.9, paddingLeft: 20, marginBottom: 20 }}>
               Our multidisciplinary team combines <span style={{ color: "#fff", fontWeight: 600 }}>deep technical expertise</span> with <span style={{ color: "#fff", fontWeight: 600 }}>creative thinking</span> — delivering solutions that are not just functional, but <span style={{ color: "#6366f1", fontWeight: 600 }}>exceptional</span>.
             </p>
+            <p style={{ color: "#505050", fontSize: 14, lineHeight: 1.9, paddingLeft: 20 }}>
+              We don't just build software. We build partnerships. Every project is a shared journey from rough idea to polished, production-ready product.
+            </p>
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 20, paddingLeft: 20 }}>
             <button onClick={() => scrollTo("contact")} style={{
               background: "#6366f1", color: "#fff",
               border: "none", borderRadius: 10,
@@ -314,43 +314,49 @@ function AnimatedAboutHero() {
                 transform: activeValue === i ? "translateY(-4px)" : "translateY(0)",
                 boxShadow: activeValue === i ? "0 8px 32px rgba(99,102,241,0.15)" : "none",
               }}>
-              {/* Top glow line */}
               <div style={{
-                position: "absolute", top: 0, left: "20%", right: "20%", height: 1,
+                position: "absolute", top: 0, left: "15%", right: "15%", height: 1,
                 background: "linear-gradient(90deg, transparent 0%, #6366f1 50%, transparent 100%)",
                 opacity: activeValue === i ? 1 : 0, transition: "opacity 0.4s",
               }} />
-              {/* Animated icon area */}
               <div style={{
                 width: 44, height: 44, borderRadius: 12,
                 background: activeValue === i ? "#6366f1" : "#111",
                 border: `1px solid ${activeValue === i ? "#6366f1" : "#1a1a1a"}`,
                 display: "flex", alignItems: "center", justifyContent: "center",
                 marginBottom: 16, transition: "all 0.4s ease",
-                fontSize: 18,
               }}>
                 {activeValue === i ? (
-                  <span style={{ color: "#fff", fontSize: 20 }}>
-                    {i === 0 ? "✦" : i === 1 ? "◆" : i === 2 ? "⬡" : "◈"}
-                  </span>
+                  <span style={{ color: "#fff", fontSize: 20 }}>{i === 0 ? "✦" : i === 1 ? "◆" : i === 2 ? "⬡" : "◈"}</span>
                 ) : (
                   <span style={{ color: "#333", fontSize: 14, fontWeight: 700 }}>0{i + 1}</span>
                 )}
               </div>
               <div style={{ fontSize: 15, fontWeight: 700, color: activeValue === i ? "#fff" : "#ccc", marginBottom: 8, transition: "color 0.3s" }}>{v.label}</div>
-              <div style={{ fontSize: 12, color: activeValue === i ? "#808080" : "#3a3a3a", lineHeight: 1.7, transition: "color 0.3s" }}>
-                {v.desc}
-              </div>
+              <div style={{ fontSize: 12, color: activeValue === i ? "#808080" : "#3a3a3a", lineHeight: 1.7, transition: "color 0.3s" }}>{v.desc}</div>
             </div>
           ))}
         </div>
       </div>
 
+
+      {/* ── Big Text Statement ── */}
+      <div style={{ marginBottom: 80, opacity: visible ? 1 : 0, transition: "opacity 0.8s ease 0.6s" }}>
+        <div style={{ textAlign: "center" }}>
+          <p style={{ fontSize: 11, letterSpacing: "0.15em", color: "#6366f1", textTransform: "uppercase", marginBottom: 24 }}>Our Philosophy</p>
+          <h3 style={{ fontSize: "clamp(1.8rem,4.5vw,3rem)", fontWeight: 800, color: "#fff", letterSpacing: "-2px", lineHeight: 1.2, maxWidth: 800, margin: "0 auto" }}>
+            We don't just build software.<br />
+            We build <span style={{ color: "#6366f1" }}>partnerships</span>.
+          </h3>
+        </div>
+      </div>
+
+      
       {/* ── Animated Gradient Divider ── */}
       <div style={{
         height: 2, borderRadius: 2, marginBottom: 64,
         background: "linear-gradient(90deg, transparent 0%, #6366f1 50%, transparent 100%)",
-        opacity: visible ? 0.3 : 0, transition: "opacity 1s ease 0.6s",
+        opacity: visible ? 0.3 : 0, transition: "opacity 1s ease 0.7s",
       }} />
     </div>
   );
