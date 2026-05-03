@@ -38,23 +38,245 @@ input, textarea, button {
   background: #6366f1;
 }
 
+/* ── Animations ── */
 @keyframes float1 {
   0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(30px, -20px) scale(1.05); }
-  66% { transform: translate(-20px, 15px) scale(0.95); }
+  33%       { transform: translate(30px, -20px) scale(1.05); }
+  66%       { transform: translate(-20px, 15px) scale(0.95); }
 }
 
 @keyframes float2 {
   0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(-25px, -30px) scale(1.08); }
+  50%       { transform: translate(-25px, -30px) scale(1.08); }
 }
 
 @keyframes pulse {
   0%, 100% { opacity: 0.3; transform: scale(1); }
-  50% { opacity: 0.6; transform: scale(1.1); }
+  50%       { opacity: 0.6; transform: scale(1.1); }
 }
 
 @keyframes pulseRing {
-  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+  0%   { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
   100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
+}
+
+/* ── Nav ── */
+.desktop-nav {
+  display: flex;
+  gap: 28px;
+  align-items: center;
+}
+
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+}
+
+/* ── Section padding helper ── */
+.section-pad {
+  padding: 100px 5%;
+}
+
+/* ── Services grid ── */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+/* ── Why Choose Us grid ── */
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+/* ── About content grid ── */
+.about-content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 72px;
+  align-items: start;
+  margin-bottom: 72px;
+}
+
+/* ── Value cards grid ── */
+.value-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+/* ── Hero stats ── */
+.hero-stats {
+  display: flex;
+  gap: 48px;
+  margin-top: 72px;
+  padding-top: 48px;
+  border-top: 1px solid #1a1a1a;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ── CTA Banner ── */
+.cta-banner {
+  margin: 0 5% 80px;
+  border-radius: 20px;
+  padding: 60px 48px;
+  text-align: center;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  border: 1px solid #2a2a5a;
+}
+
+/* ── Footer ── */
+.site-footer {
+  border-top: 1px solid #141414;
+  padding: 28px 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+/* ── Process timeline ── */
+.process-centre-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #1a1a1a;
+  transform: translateX(-50%);
+}
+
+.process-step {
+  display: flex;
+  align-items: center;
+  margin-bottom: 32px;
+  position: relative;
+}
+
+.process-card {
+  width: calc(50% - 40px);
+}
+
+.process-spacer {
+  width: calc(50% - 40px);
+}
+
+/* ─────────────────────────────────────
+   TABLET  ≤ 900px
+───────────────────────────────────── */
+@media (max-width: 900px) {
+  .why-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .about-content-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+/* ─────────────────────────────────────
+   MOBILE  ≤ 768px
+───────────────────────────────────── */
+@media (max-width: 768px) {
+  .desktop-nav {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .section-pad {
+    padding: 72px 5%;
+  }
+
+  .cta-banner {
+    padding: 40px 28px;
+    margin: 0 4% 60px;
+  }
+}
+
+/* ─────────────────────────────────────
+   SMALL MOBILE  ≤ 640px
+───────────────────────────────────── */
+@media (max-width: 640px) {
+  .section-pad {
+    padding: 56px 5%;
+  }
+
+  .why-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-stats {
+    gap: 24px;
+  }
+
+  .cta-banner {
+    padding: 32px 20px;
+    border-radius: 14px;
+  }
+
+  /* Process timeline — stack vertically */
+  .process-centre-line {
+    left: 16px;
+    transform: none;
+  }
+
+  .process-step {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 44px;
+  }
+
+  .process-card {
+    width: 100%;
+    order: 2 !important;
+    text-align: left !important;
+  }
+
+  .process-spacer {
+    display: none;
+  }
+
+  .process-dot {
+    position: absolute;
+    left: 8px;
+    top: 4px;
+    transform: none;
+  }
+
+  .value-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .site-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ─────────────────────────────────────
+   EXTRA SMALL  ≤ 400px
+───────────────────────────────────── */
+@media (max-width: 400px) {
+  .cta-banner {
+    margin: 0 0 48px;
+    border-radius: 0;
+  }
 }
