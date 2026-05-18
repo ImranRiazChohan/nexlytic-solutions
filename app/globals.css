@@ -13,9 +13,10 @@ body {
   color: #e8e8e8;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
 }
 
-input, textarea, button {
+input, textarea, button, select {
   font-family: inherit;
 }
 
@@ -31,33 +32,11 @@ input, textarea, button {
   background: #0a0a0a;
 }
 ::-webkit-scrollbar-thumb {
-  background: #2a2a2a;
-  border-radius: 3px;
+  background: #222;
+  border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #6366f1;
-}
-
-/* ── Animations ── */
-@keyframes float1 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33%       { transform: translate(30px, -20px) scale(1.05); }
-  66%       { transform: translate(-20px, 15px) scale(0.95); }
-}
-
-@keyframes float2 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50%       { transform: translate(-25px, -30px) scale(1.08); }
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 0.3; transform: scale(1); }
-  50%       { opacity: 0.6; transform: scale(1.1); }
-}
-
-@keyframes pulseRing {
-  0%   { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
-  100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
 }
 
 /* ── Nav ── */
@@ -83,45 +62,57 @@ input, textarea, button {
   padding: 100px 5%;
 }
 
+/* ── About section ── */
+.about-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+/* "Startups" gradient word with underline */
+.about-headline-accent {
+  background: linear-gradient(135deg, #6366f1 0%, #a78bfa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-decoration: underline;
+  text-decoration-color: #6366f1;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 10px;
+}
+
+/* ── Process Timeline ── */
+.process-grid {
+  display: grid;
+  grid-template-columns: 1fr 80px 1fr;
+  row-gap: 56px;
+}
+.process-slot-left {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 40px;
+}
+.process-slot-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+}
+.process-slot-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 40px;
+}
+
 /* ── Services grid ── */
 .services-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 24px;
-}
-
-/* ── Why Choose Us grid ── */
-.why-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-}
-
-/* ── About content grid ── */
-.about-content-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 72px;
-  align-items: start;
-  margin-bottom: 72px;
-}
-
-/* ── Value cards grid ── */
-.value-cards-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-}
-
-/* ── Hero stats ── */
-.hero-stats {
-  display: flex;
-  gap: 48px;
-  margin-top: 72px;
-  padding-top: 48px;
-  border-top: 1px solid #1a1a1a;
-  flex-wrap: wrap;
-  justify-content: center;
 }
 
 /* ── CTA Banner ── */
@@ -145,43 +136,18 @@ input, textarea, button {
   gap: 14px;
 }
 
-/* ── Process timeline ── */
-.process-centre-line {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: #1a1a1a;
-  transform: translateX(-50%);
-}
-
-.process-step {
-  display: flex;
-  align-items: center;
-  margin-bottom: 32px;
-  position: relative;
-}
-
-.process-card {
-  width: calc(50% - 40px);
-}
-
-.process-spacer {
-  width: calc(50% - 40px);
-}
-
 /* ─────────────────────────────────────
    TABLET  ≤ 900px
 ───────────────────────────────────── */
 @media (max-width: 900px) {
-  .why-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
   .about-content-grid {
     grid-template-columns: 1fr;
     gap: 40px;
+  }
+
+  .about-layout {
+    grid-template-columns: 1fr;
+    gap: 48px;
   }
 }
 
@@ -205,6 +171,22 @@ input, textarea, button {
     padding: 40px 28px;
     margin: 0 4% 60px;
   }
+
+  /* Process timeline collapses to single column */
+  .process-grid {
+    grid-template-columns: 1fr;
+    row-gap: 20px;
+  }
+  .process-slot-center,
+  .process-slot-left:empty,
+  .process-slot-right:empty {
+    display: none;
+  }
+  .process-slot-left,
+  .process-slot-right {
+    justify-content: flex-start;
+    padding: 0;
+  }
 }
 
 /* ─────────────────────────────────────
@@ -215,54 +197,13 @@ input, textarea, button {
     padding: 56px 5%;
   }
 
-  .why-grid {
-    grid-template-columns: 1fr;
-  }
-
   .services-grid {
     grid-template-columns: 1fr;
-  }
-
-  .hero-stats {
-    gap: 24px;
   }
 
   .cta-banner {
     padding: 32px 20px;
     border-radius: 14px;
-  }
-
-  /* Process timeline — stack vertically */
-  .process-centre-line {
-    left: 16px;
-    transform: none;
-  }
-
-  .process-step {
-    flex-direction: column;
-    align-items: flex-start;
-    padding-left: 44px;
-  }
-
-  .process-card {
-    width: 100%;
-    order: 2 !important;
-    text-align: left !important;
-  }
-
-  .process-spacer {
-    display: none;
-  }
-
-  .process-dot {
-    position: absolute;
-    left: 8px;
-    top: 4px;
-    transform: none;
-  }
-
-  .value-cards-grid {
-    grid-template-columns: 1fr;
   }
 
   .site-footer {
