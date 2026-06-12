@@ -1,58 +1,68 @@
 "use client";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
+// Place your background image at /public/service-bg.jpg
 const SERVICES = [
   {
-    icon: "🚀",
-    title: "Mobile Applications",
+    label: "MOBILE APPS",
+    title: ["Mobile", "Applications"],
     desc: "Native and cross-platform apps for iOS and Android — built for performance and a polished user experience.",
     tags: ["React Native", "Flutter", "iOS & Android"],
     color: "#f59e0b",
+    rgb: "245,158,11",
   },
   {
-    icon: "⚡",
-    title: "Web Applications",
+    label: "WEB APPLICATIONS",
+    title: ["Web", "Applications"],
     desc: "Scalable, high-performance web applications built with modern frameworks — fast, secure, and SEO-ready.",
     tags: ["Next.js / React", "Node.js", "REST & GraphQL"],
     color: "#6366f1",
+    rgb: "99,102,241",
   },
   {
-    icon: "🧠",
-    title: "Data & AI Services",
+    label: "DATA & AI",
+    title: ["Data Science", "& AI"],
     desc: "End-to-end data solutions and AI-powered chatbots that drive smarter decisions and automate workflows.",
     tags: ["Data Engineering", "LLM Integration", "BI & Analytics"],
     color: "#10b981",
+    rgb: "16,185,129",
   },
 ];
 
+const AUTO_DELAY = 5000;
+
 export default function Services() {
+  const [active, setActive] = useState(1);
+  const [isMobile, setIsMobile] = useState(false);
+  const activeRef = useRef(1);
   const sectionRef = useRef(null);
   const headerRef = useRef(null);
-  const cardRefs = useRef([]);
-  const [hoveredCard, setHoveredCard] = useState(null);
+  const sliderRef = useRef(null);
+  const contentRefs = useRef([]);
+  const timerRef = useRef(null);
 
-  // Set initial hidden state before first paint
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
   useGSAP(() => {
     gsap.set(headerRef.current, { opacity: 0, y: 40 });
-    cardRefs.current.forEach((el) => {
-      if (el) gsap.set(el, { opacity: 0, y: 60 });
-    });
-  });
+    gsap.set(sliderRef.current, { opacity: 0, y: 40 });
+  }, { dependencies: [], revertOnUpdate: false });
 
-  // Reveal with IntersectionObserver when section enters viewport
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
-
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting) return;
         gsap.to(headerRef.current, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" });
-        gsap.to(cardRefs.current.filter(Boolean), {
-          opacity: 1, y: 0, duration: 0.8, ease: "power3.out", stagger: 0.15, delay: 0.25,
-        });
+        gsap.to(sliderRef.current, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out", delay: 0.2 });
         observer.disconnect();
       },
       { threshold: 0.05 }
@@ -61,96 +71,379 @@ export default function Services() {
     return () => observer.disconnect();
   }, []);
 
+  const changeTo = useCallback((index) => {
+    if (index === activeRef.current) return;
+    activeRef.current = index;
+    setActive(index);
+    const entering = contentRefs.current[index];
+    if (entering) {
+      gsap.fromTo(entering, { y: 28 }, { y: 0, duration: 0.6, ease: "power3.out", delay: 0.36 });
+    }
+  }, []);
+
+  // Auto-advance — resets whenever user manually picks a slide
+  useEffect(() => {
+    timerRef.current = setInterval(() => {
+      changeTo((activeRef.current + 1) % SERVICES.length);
+    }, AUTO_DELAY);
+    return () => clearInterval(timerRef.current);
+  }, [active, changeTo]);
+
+  const prev = useCallback(
+    () => changeTo((activeRef.current - 1 + SERVICES.length) % SERVICES.length),
+    [changeTo]
+  );
+  const next = useCallback(
+    () => changeTo((activeRef.current + 1) % SERVICES.length),
+    [changeTo]
+  );
+
+  const inactiveWidth = isMobile ? 52 : 112;
+
   return (
     <section
       ref={sectionRef}
-      style={{ padding: "120px 5%", position: "relative", overflow: "hidden" }}
+      style={{ padding: "120px 0", position: "relative", overflow: "hidden" }}
     >
-      <div
-        style={{
-          position: "absolute", top: "50%", left: "50%",
-          transform: "translate(-50%,-50%)",
-          width: 700, height: 700, borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(99,102,241,0.04) 0%, transparent 70%)",
-          pointerEvents: "none",
-        }}
-      />
-
-      <div style={{ maxWidth: 1200, margin: "0 auto", position: "relative", zIndex: 2 }}>
-        {/* Header */}
-        <div ref={headerRef} style={{ textAlign: "center", marginBottom: 80 }}>
-          <div
+      {/* Header */}
+      <div ref={headerRef} style={{ textAlign: "center", marginBottom: 64, padding: "0 5%" }}>
+        <div
+          style={{
+            display: "inline-flex", alignItems: "center", gap: 9,
+            background: "rgba(255,255,255,0.04)",
+            border: "1px solid rgba(255,255,255,0.08)",
+            borderRadius: 100, padding: "9px 20px",
+            fontSize: 13, color: "#888", marginBottom: 36, fontWeight: 500,
+          }}
+        >
+          <span
             style={{
-              display: "inline-flex", alignItems: "center", gap: 9,
-              background: "rgba(255,255,255,0.04)",
-              border: "1px solid rgba(255,255,255,0.08)",
-              borderRadius: 100, padding: "9px 20px",
-              fontSize: 13, color: "#888", marginBottom: 36, fontWeight: 500,
+              width: 8, height: 8, borderRadius: "50%",
+              background: "#6366f1",
+              boxShadow: "0 0 10px rgba(99,102,241,0.8)",
+              display: "inline-block", flexShrink: 0,
             }}
-          >
-            <span
-              style={{
-                width: 8, height: 8, borderRadius: "50%",
-                background: "#6366f1",
-                boxShadow: "0 0 10px rgba(99,102,241,0.8)",
-                display: "inline-block", flexShrink: 0,
-              }}
-            />
-            Our Expertise
-          </div>
-          <h2 style={{ fontSize: "clamp(1.6rem, 3.5vw, 2.6rem)", fontWeight: 800, color: "#fff", letterSpacing: "-0.8px", lineHeight: 1.1, marginBottom: 20 }}>
-            What Exactly Do We Do?
-          </h2>
-          <p style={{ color: "#707070", fontSize: 15, maxWidth: 580, lineHeight: 1.75, margin: "0 auto" }}>
-            We specialize in building intelligent digital products that solve real business problems.
-          </p>
+          />
+          Our Expertise
         </div>
+        <h2
+          style={{
+            fontSize: "clamp(1.6rem, 3.5vw, 2.6rem)",
+            fontWeight: 800, color: "#fff",
+            letterSpacing: "-0.8px", lineHeight: 1.1, marginBottom: 20,
+          }}
+        >
+          What Exactly Do We Do?
+        </h2>
+        <p style={{ color: "#707070", fontSize: 15, maxWidth: 580, lineHeight: 1.75, margin: "0 auto" }}>
+          We specialize in building intelligent digital products that solve real business problems.
+        </p>
+      </div>
 
-        {/* Grid */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 24 }}>
-          {SERVICES.map((service, i) => {
-            const isHovered = hoveredCard === i;
-            return (
+      {/* Slider */}
+      <div
+        ref={sliderRef}
+        style={{
+          display: "flex",
+          height: isMobile ? 480 : 560,
+          margin: "0 5%",
+          borderRadius: 20,
+          overflow: "hidden",
+          gap: 4,
+          boxShadow: "0 40px 100px rgba(0,0,0,0.55)",
+        }}
+      >
+        {SERVICES.map((service, i) => {
+          const isActive = i === active;
+
+          return (
+            <div
+              key={i}
+              onClick={() => !isActive && changeTo(i)}
+              style={{
+                flex: isActive ? "1" : `0 0 ${inactiveWidth}px`,
+                transition: "flex 0.85s cubic-bezier(0.77, 0, 0.175, 1)",
+                position: "relative",
+                overflow: "hidden",
+                cursor: isActive ? "default" : "pointer",
+                borderRadius: 14,
+                background: "#080808",
+                minWidth: 0,
+              }}
+            >
+              {/* ── Full-width background image ── */}
               <div
-                key={i}
-                ref={(el) => { cardRefs.current[i] = el; }}
-                onMouseEnter={() => setHoveredCard(i)}
-                onMouseLeave={() => setHoveredCard(null)}
                 style={{
-                  background: isHovered ? `linear-gradient(135deg, ${service.color}0d 0%, #0d0d0d 100%)` : "#0d0d0d",
-                  border: `1px solid ${isHovered ? service.color + "40" : "#1a1a1a"}`,
-                  borderRadius: 20, padding: "40px 32px",
-                  cursor: "default", position: "relative", overflow: "hidden",
-                  transition: "border-color 0.4s ease, background 0.4s ease, box-shadow 0.4s ease",
-                  transform: isHovered ? "translateY(-10px)" : "translateY(0)",
-                  boxShadow: isHovered ? `0 24px 64px ${service.color}20` : "none",
+                  position: "absolute", inset: 0,
+                  backgroundImage: "url(/service-bg.jpg)",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  opacity: isActive ? 0.82 : 0.35,
+                  transform: isActive ? "scale(1)" : "scale(1.06)",
+                  transition: "opacity 0.85s ease, transform 0.85s ease",
+                }}
+              />
+
+              {/* ── Active: left-gradient overlay (image shows through on right) ── */}
+              {isActive && (
+                <div
+                  style={{
+                    position: "absolute", inset: 0, zIndex: 1,
+                    background: `linear-gradient(to right,
+                      rgba(0,0,0,0.92) 0%,
+                      rgba(0,0,0,0.75) 28%,
+                      rgba(0,0,0,0.28) 55%,
+                      rgba(0,0,0,0.04) 100%)`,
+                  }}
+                />
+              )}
+
+              {/* ── Active: top color accent line ── */}
+              {isActive && (
+                <div
+                  style={{
+                    position: "absolute", top: 0, left: 0, right: 0,
+                    height: 3, zIndex: 3,
+                    background: `linear-gradient(90deg, ${service.color} 0%, transparent 65%)`,
+                    opacity: 0.85,
+                  }}
+                />
+              )}
+
+              {/* ── Inactive: glassmorphism overlay ── */}
+              {!isActive && (
+                <>
+                  {/* Frosted base layer */}
+                  <div
+                    style={{
+                      position: "absolute", inset: 0, zIndex: 1,
+                      background: "rgba(8,8,12,0.55)",
+                      backdropFilter: "blur(18px) saturate(1.4)",
+                      WebkitBackdropFilter: "blur(18px) saturate(1.4)",
+                    }}
+                  />
+                  {/* Glass border highlight — left edge */}
+                  <div
+                    style={{
+                      position: "absolute", top: 0, left: 0, bottom: 0,
+                      width: 1, zIndex: 2,
+                      background: "linear-gradient(180deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.04) 50%, transparent 100%)",
+                    }}
+                  />
+                  {/* Glass border highlight — right edge */}
+                  <div
+                    style={{
+                      position: "absolute", top: 0, right: 0, bottom: 0,
+                      width: 1, zIndex: 2,
+                      background: "linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.03) 50%, transparent 100%)",
+                    }}
+                  />
+                  {/* Top inner highlight (glass sheen) */}
+                  <div
+                    style={{
+                      position: "absolute", top: 0, left: 0, right: 0,
+                      height: 60, zIndex: 2,
+                      background: "linear-gradient(180deg, rgba(255,255,255,0.06) 0%, transparent 100%)",
+                    }}
+                  />
+                  {/* Subtle service-color tint at bottom */}
+                  <div
+                    style={{
+                      position: "absolute", bottom: 0, left: 0, right: 0,
+                      height: 120, zIndex: 2,
+                      background: `linear-gradient(0deg, rgba(${service.rgb},0.08) 0%, transparent 100%)`,
+                    }}
+                  />
+                </>
+              )}
+
+              {/* ── Inactive: arrow + vertical label ── */}
+              <div
+                style={{
+                  position: "absolute", inset: 0, zIndex: 4,
+                  display: "flex", flexDirection: "column",
+                  alignItems: "center", justifyContent: "space-between",
+                  padding: "24px 0 28px",
+                  opacity: isActive ? 0 : 1,
+                  transition: isActive ? "opacity 0.2s ease" : "opacity 0.35s ease 0.3s",
+                  pointerEvents: isActive ? "none" : "auto",
                 }}
               >
-                <div style={{ position: "absolute", top: 0, left: "15%", right: "15%", height: 2, background: `linear-gradient(90deg, transparent, ${service.color}, transparent)`, opacity: isHovered ? 1 : 0, transition: "opacity 0.4s ease" }} />
-                <div style={{ position: "absolute", top: -50, right: -50, width: 160, height: 160, borderRadius: "50%", background: `radial-gradient(circle, ${service.color}18, transparent 70%)`, opacity: isHovered ? 1 : 0, transition: "opacity 0.4s ease", pointerEvents: "none" }} />
-
-                <div style={{ position: "relative", zIndex: 2 }}>
-                  <div style={{ width: 64, height: 64, borderRadius: 18, background: isHovered ? `${service.color}18` : "#111", border: `1px solid ${isHovered ? service.color + "40" : "#1e1e1e"}`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 30, marginBottom: 24, transition: "all 0.4s ease", transform: isHovered ? "scale(1.12) rotate(-4deg)" : "scale(1) rotate(0deg)" }}>
-                    {service.icon}
+                <div
+                  style={{
+                    width: 34, height: 34, borderRadius: "50%",
+                    border: "1px solid rgba(255,255,255,0.15)",
+                    background: "rgba(255,255,255,0.05)",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    color: "rgba(255,255,255,0.55)", fontSize: 14,
+                  }}
+                >
+                  →
+                </div>
+                {!isMobile && (
+                  <div
+                    style={{
+                      writingMode: "vertical-rl",
+                      transform: "rotate(180deg)",
+                      fontSize: 9, fontWeight: 700,
+                      color: "rgba(255,255,255,0.32)",
+                      letterSpacing: "0.22em",
+                      textTransform: "uppercase",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {service.label}
                   </div>
-                  <h3 style={{ fontSize: 20, fontWeight: 800, color: "#fff", marginBottom: 12, lineHeight: 1.3 }}>
-                    {service.title}
-                  </h3>
-                  <p style={{ fontSize: 15, color: isHovered ? "#959595" : "#606060", lineHeight: 1.75, marginBottom: 24, transition: "color 0.3s" }}>
+                )}
+              </div>
+
+              {/* ── Active: slide content ── */}
+              <div
+                ref={(el) => { contentRefs.current[i] = el; }}
+                style={{
+                  position: "absolute", inset: 0, zIndex: 5,
+                  padding: isMobile ? "32px 28px 28px" : "44px 52px 40px",
+                  display: "flex", flexDirection: "column",
+                  justifyContent: "space-between",
+                  opacity: isActive ? 1 : 0,
+                  transition: isActive ? "opacity 0.45s ease 0.3s" : "opacity 0.18s ease",
+                  pointerEvents: isActive ? "auto" : "none",
+                }}
+              >
+                {/* Top: line + nav arrows */}
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                  <div
+                    style={{
+                      flex: 1, height: 1, marginRight: 20,
+                      background: "linear-gradient(to right, rgba(255,255,255,0.3), rgba(255,255,255,0.05))",
+                    }}
+                  />
+                  <div style={{ display: "flex", gap: 10 }}>
+                    {[{ arrow: "←", fn: prev }, { arrow: "→", fn: next }].map(({ arrow, fn }) => (
+                      <button
+                        key={arrow}
+                        onClick={(e) => { e.stopPropagation(); fn(); }}
+                        style={{
+                          width: 38, height: 38, borderRadius: "50%",
+                          border: "1px solid rgba(255,255,255,0.2)",
+                          background: "rgba(255,255,255,0.08)",
+                          backdropFilter: "blur(8px)",
+                          WebkitBackdropFilter: "blur(8px)",
+                          color: "#fff", cursor: "pointer",
+                          display: "flex", alignItems: "center", justifyContent: "center",
+                          fontSize: 15, transition: "all 0.25s ease", flexShrink: 0,
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.background = "rgba(255,255,255,0.18)";
+                          e.currentTarget.style.borderColor = "rgba(255,255,255,0.4)";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.background = "rgba(255,255,255,0.08)";
+                          e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)";
+                        }}
+                      >
+                        {arrow}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Title + description + CTA */}
+                <div>
+                  <h2
+                    style={{
+                      fontSize: isMobile ? "clamp(2rem, 8vw, 2.8rem)" : "clamp(2.4rem, 4.5vw, 3.8rem)",
+                      fontWeight: 900, color: "#fff",
+                      lineHeight: 1.05, marginBottom: 16,
+                      letterSpacing: "-1.5px",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    {service.title[0]}<br />{service.title[1]}
+                  </h2>
+                  <p
+                    style={{
+                      fontSize: 15, color: "rgba(255,255,255,0.68)",
+                      lineHeight: 1.8, maxWidth: 420, marginBottom: 28,
+                    }}
+                  >
                     {service.desc}
                   </p>
+                  <button
+                    style={{
+                      background: service.color,
+                      color: "#fff", border: "none",
+                      borderRadius: 100, padding: "13px 34px",
+                      fontSize: 12, fontWeight: 700, cursor: "pointer",
+                      letterSpacing: "0.1em", textTransform: "uppercase",
+                      boxShadow: `0 8px 28px rgba(${service.rgb},0.4)`,
+                      transition: "all 0.3s ease",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = "translateY(-2px)";
+                      e.currentTarget.style.boxShadow = `0 14px 40px rgba(${service.rgb},0.62)`;
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = "translateY(0)";
+                      e.currentTarget.style.boxShadow = `0 8px 28px rgba(${service.rgb},0.4)`;
+                    }}
+                  >
+                    Learn More
+                  </button>
+                </div>
+
+                {/* Bottom: tags + counter + auto-progress dots */}
+                <div
+                  style={{
+                    display: "flex", alignItems: "center",
+                    justifyContent: "space-between",
+                    flexWrap: "wrap", gap: 12,
+                  }}
+                >
                   <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
                     {service.tags.map((tag, j) => (
-                      <span key={j} style={{ display: "inline-block", background: `${service.color}12`, border: `1px solid ${service.color}30`, color: service.color, borderRadius: 8, padding: "6px 12px", fontSize: 12, fontWeight: 600, opacity: isHovered ? 1 : 0.65, transition: "opacity 0.3s ease" }}>
+                      <span
+                        key={j}
+                        style={{
+                          background: "rgba(255,255,255,0.08)",
+                          backdropFilter: "blur(8px)",
+                          WebkitBackdropFilter: "blur(8px)",
+                          border: "1px solid rgba(255,255,255,0.13)",
+                          color: "rgba(255,255,255,0.65)",
+                          borderRadius: 8, padding: "6px 14px",
+                          fontSize: 12, fontWeight: 600,
+                        }}
+                      >
                         {tag}
                       </span>
                     ))}
                   </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 14, flexShrink: 0 }}>
+                    {/* Slide dots */}
+                    <div style={{ display: "flex", gap: 6 }}>
+                      {SERVICES.map((_, di) => (
+                        <button
+                          key={di}
+                          onClick={(e) => { e.stopPropagation(); changeTo(di); }}
+                          style={{
+                            width: di === active ? 20 : 6,
+                            height: 6, borderRadius: 3, border: "none", cursor: "pointer",
+                            background: di === active ? service.color : "rgba(255,255,255,0.2)",
+                            transition: "all 0.4s ease",
+                            boxShadow: di === active ? `0 0 8px rgba(${service.rgb},0.6)` : "none",
+                          }}
+                        />
+                      ))}
+                    </div>
+                    <span style={{ fontSize: 13, fontWeight: 700, color: "rgba(255,255,255,0.22)" }}>
+                      {String(i + 1).padStart(2, "0")} / {String(SERVICES.length).padStart(2, "0")}
+                    </span>
+                  </div>
                 </div>
               </div>
-            );
-          })}
-        </div>
+            </div>
+          );
+        })}
       </div>
     </section>
   );
