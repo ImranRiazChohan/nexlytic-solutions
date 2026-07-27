@@ -74,8 +74,9 @@ export default function Navigation({ scrollTo }) {
           <div className="desktop-nav">
             {[
               { label: "Services", id: "services" },
-              { label: "Why Us", id: "why" },
+              { label: "Portfolio", id: "portfolio" },
               { label: "Process", id: "process" },
+              { label: "Why Us", id: "why" },
             ].map(({ label, id }) => (
               <button
                 key={id}
@@ -142,8 +143,9 @@ export default function Navigation({ scrollTo }) {
         >
           {[
             { label: "Services", id: "services" },
-            { label: "Why Us", id: "why" },
+            { label: "Portfolio", id: "portfolio" },
             { label: "Process", id: "process" },
+            { label: "Why Us", id: "why" },
             { label: "Contact", id: "contact" },
           ].map(({ label, id }) => (
             <button
