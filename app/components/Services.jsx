@@ -7,21 +7,42 @@ const SERVICES = [
   {
     icon: "</>",
     title: "Web Development",
-    desc: "Modern, responsive and high-performance websites and web applications tailored to your business needs.",
+    desc: "Fast, responsive websites and web apps built on modern frameworks.",
+    features: [
+      "Custom websites & landing pages",
+      "E-commerce stores",
+      "Admin dashboards & SaaS platforms",
+      "API development & integrations",
+    ],
+    tags: ["Next.js", "React", "Node.js"],
     color: "#6366f1",
     rgb: "99,102,241",
   },
   {
     icon: "📱",
     title: "Mobile App Development",
-    desc: "User-friendly, scalable and feature-rich mobile apps for iOS and Android platforms.",
+    desc: "Smooth, reliable apps for iOS and Android, built to scale from day one.",
+    features: [
+      "Cross-platform apps (iOS & Android)",
+      "App Store & Play Store deployment",
+      "Push notifications & in-app payments",
+      "Post-launch support & updates",
+    ],
+    tags: ["React Native", "Flutter", "Firebase"],
     color: "#6366f1",
     rgb: "99,102,241",
   },
   {
     icon: "🧠",
     title: "Data & AI",
-    desc: "Intelligent solutions using data and AI to solve real-world problems and drive better decisions.",
+    desc: "Data pipelines, analytics, and AI tools that turn information into decisions.",
+    features: [
+      "Data engineering & ETL pipelines",
+      "Data analytics & BI dashboards",
+      "Data science & predictive models",
+      "Chatbots & AI agents (LLM-powered)",
+    ],
+    tags: ["Python", "LangChain", "Power BI"],
     color: "#6366f1",
     rgb: "99,102,241",
   },
@@ -145,9 +166,32 @@ export default function Services({ scrollTo }) {
                   <h3 style={{ fontSize: 20, fontWeight: 800, color: "#fff", marginBottom: 12 }}>
                     {service.title}
                   </h3>
-                  <p style={{ fontSize: 14, color: "#707070", lineHeight: 1.8 }}>
+                  <p style={{ fontSize: 14, color: "#707070", lineHeight: 1.8, marginBottom: 20 }}>
                     {service.desc}
                   </p>
+                  <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 10, marginBottom: 22 }}>
+                    {service.features.map((f) => (
+                      <li key={f} style={{ display: "flex", alignItems: "flex-start", gap: 9, fontSize: 13.5, color: "#909090", lineHeight: 1.5 }}>
+                        <span style={{ color: service.color, flexShrink: 0, marginTop: 1 }}>✓</span>
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+                  <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                    {service.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        style={{
+                          fontSize: 11.5, fontWeight: 600, color: service.color,
+                          background: `rgba(${service.rgb},0.1)`,
+                          border: `1px solid rgba(${service.rgb},0.28)`,
+                          borderRadius: 100, padding: "5px 11px",
+                        }}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
                 <button
                   onClick={() => scrollTo?.("contact")}
