@@ -142,19 +142,18 @@ export default function About({ scrollTo }) {
               }}
             >
               <p style={{ fontSize: 16, color: "#c0c0c0", lineHeight: 1.85 }}>
-                Our multidisciplinary team combines{" "}
-                <strong style={{ color: "#fff", fontWeight: 700 }}>deep technical expertise</strong>{" "}
-                with{" "}
-                <strong style={{ color: "#fff", fontWeight: 700 }}>creative thinking</strong>{" "}
-                — delivering solutions that are not just functional, but{" "}
-                <span style={{ color: "#6366f1", fontWeight: 600 }}>exceptional</span>.
+                We&rsquo;re a small team of{" "}
+                <strong style={{ color: "#fff", fontWeight: 700 }}>engineers and designers</strong>{" "}
+                who&rsquo;d rather ship something{" "}
+                <span style={{ color: "#6366f1", fontWeight: 600 }}>solid</span>{" "}
+                than pad a proposal with buzzwords.
               </p>
             </div>
 
             {/* Secondary paragraph */}
             <p style={{ fontSize: 15, color: "#505050", lineHeight: 1.9, marginBottom: 40 }}>
-              We don&rsquo;t just build software. We build partnerships. Every project is a
-              shared journey from rough idea to polished, production-ready product.
+              You&rsquo;ll talk directly to the people writing your code — no account
+              managers relaying messages between you and the developers.
             </p>
 
             {/* CTA row */}

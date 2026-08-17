@@ -53,59 +53,35 @@ input, textarea, button, select {
 .hero-layout {
   position: relative;
   z-index: 2;
-  display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  gap: 40px;
-  align-items: center;
-  max-width: 1280px;
+  max-width: 900px;
   margin: 0 auto;
   width: 100%;
+  text-align: center;
 }
 
 .hero-content {
-  text-align: left;
+  text-align: center;
 }
 
 .hero-subtitle {
-  margin: 0 0 52px;
+  margin: 0 auto 52px;
 }
 
 .hero-badge-row,
-.hero-btn-row,
-.hero-trust-row {
-  justify-content: flex-start;
-}
-
-.hero-image-col {
-  position: relative;
-  display: flex;
+.hero-btn-row {
   justify-content: center;
-  align-items: center;
-}
-
-.hero-image-glow {
-  position: absolute;
-  inset: -12%;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.28) 0%, transparent 70%);
-  filter: blur(60px);
-  pointer-events: none;
-  z-index: -1;
 }
 
 .hero-stats-row {
   position: relative;
   z-index: 2;
-  display: flex;
-  gap: 48px;
-  justify-content: flex-start;
-  flex-wrap: wrap;
+  max-width: 900px;
+  margin: 24px auto 0;
+  width: 100%;
   border-top: 1px solid #141414;
   padding-top: 24px;
-  margin-top: 24px;
-  max-width: 1280px;
-  margin-left: auto;
-  margin-right: auto;
-  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 /* ── Nav ── */
@@ -209,323 +185,6 @@ input, textarea, button, select {
   box-shadow: 0 4px 12px rgba(99, 102, 241, 0.5);
 }
 
-/* ── Portfolio / Our Work ── */
-.portfolio-layout {
-  display: grid;
-  grid-template-columns: 0.85fr 2.15fr;
-  gap: 48px;
-  align-items: start;
-}
-.portfolio-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-}
-.portfolio-chat-avatar {
-  animation: portfolio-chat-pulse 3s ease-in-out infinite;
-}
-@keyframes portfolio-chat-pulse {
-  0%, 100% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.12), 0 10px 28px rgba(16, 185, 129, 0.35); }
-  50% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0.2), 0 10px 28px rgba(16, 185, 129, 0.45); }
-}
-
-.portfolio-intro h2,
-.portfolio-intro p {
-  max-width: 330px;
-}
-
-/* Card — thumbnail on top, copy below (no outer card chrome) */
-.portfolio-card {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-.portfolio-thumb {
-  position: relative;
-  aspect-ratio: 16 / 11;
-  margin-bottom: 22px;
-  border-radius: 16px;
-  border: 1px solid #1c1c1c;
-  background: linear-gradient(160deg, #111114 0%, #0b0b0d 100%);
-  overflow: hidden;
-  transition: border-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s ease;
-}
-.portfolio-card:hover .portfolio-thumb {
-  border-color: rgba(var(--pf-accent-rgb), 0.45);
-  box-shadow: 0 24px 60px rgba(var(--pf-accent-rgb), 0.16);
-  transform: translateY(-6px);
-}
-.portfolio-card-head {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-bottom: 14px;
-}
-.portfolio-tag {
-  flex-shrink: 0;
-  border-radius: 100px;
-  padding: 5px 13px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  color: var(--pf-accent);
-  background: rgba(var(--pf-accent-rgb), 0.12);
-  border: 1px solid rgba(var(--pf-accent-rgb), 0.35);
-}
-.portfolio-card p {
-  flex: 1;
-}
-.portfolio-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  align-self: flex-start;
-  color: var(--pf-accent);
-  font-size: 14px;
-  font-weight: 700;
-  text-decoration: none;
-}
-.portfolio-link span {
-  transition: transform 0.3s ease;
-}
-.portfolio-card:hover .portfolio-link span {
-  transform: translateX(4px);
-}
-
-/* Shared mockup primitives */
-.pf-line {
-  display: block;
-  height: 5px;
-  border-radius: 3px;
-  background: rgba(255, 255, 255, 0.09);
-}
-.pf-line-strong {
-  background: rgba(255, 255, 255, 0.2);
-}
-.pf-dot {
-  flex-shrink: 0;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #6366f1 0%, #a78bfa 100%);
-}
-
-/* Mockup — analytics dashboard */
-.pf-dash {
-  display: flex;
-  height: 100%;
-  gap: 8px;
-  padding: 8px;
-}
-.pf-dash-side {
-  flex-shrink: 0;
-  width: 15%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 7px;
-  padding: 9px 0;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.03);
-}
-.pf-dash-logo {
-  width: 12px;
-  height: 12px;
-  border-radius: 4px;
-  background: linear-gradient(135deg, #6366f1 0%, #a78bfa 100%);
-  margin-bottom: 4px;
-}
-.pf-dash-nav {
-  width: 55%;
-  height: 4px;
-  border-radius: 2px;
-  background: rgba(255, 255, 255, 0.09);
-}
-.pf-dash-nav.is-active {
-  background: #6366f1;
-}
-.pf-dash-main {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.pf-dash-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-}
-.pf-dash-avatar {
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.14);
-}
-.pf-dash-chart {
-  position: relative;
-  flex: 1;
-  min-height: 0;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.025);
-  overflow: hidden;
-}
-.pf-dash-svg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-.pf-dash-bars {
-  position: absolute;
-  inset: auto 10px 10px 10px;
-  height: 45%;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 5%;
-}
-.pf-dash-bars span {
-  flex: 1;
-  border-radius: 2px 2px 0 0;
-  background: linear-gradient(180deg, rgba(129, 140, 248, 0.75) 0%, rgba(99, 102, 241, 0.2) 100%);
-}
-.pf-dash-stats {
-  display: flex;
-  gap: 8px;
-}
-.pf-dash-stat {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  padding: 9px 8px;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-/* Mockup — mobile app screens */
-.pf-phones {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  height: 100%;
-  padding: 14px 10px 0;
-}
-.pf-phone {
-  position: relative;
-  flex: 1;
-  max-width: 31%;
-  height: 82%;
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  padding: 16px 9px 10px;
-  border-radius: 14px 14px 6px 6px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: linear-gradient(170deg, #16161b 0%, #0d0d10 100%);
-}
-.pf-phone-lead {
-  height: 100%;
-  border-color: rgba(99, 102, 241, 0.3);
-  box-shadow: 0 10px 30px rgba(99, 102, 241, 0.18);
-}
-.pf-phone-notch {
-  position: absolute;
-  top: 6px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 30%;
-  height: 3px;
-  border-radius: 2px;
-  background: rgba(255, 255, 255, 0.14);
-}
-.pf-ring {
-  width: 34px;
-  height: 34px;
-  margin: 4px auto 6px;
-  border-radius: 50%;
-  border: 4px solid rgba(255, 255, 255, 0.08);
-  border-top-color: #6366f1;
-  border-right-color: #a78bfa;
-  transform: rotate(35deg);
-}
-.pf-phone-bars {
-  display: flex;
-  align-items: flex-end;
-  gap: 4px;
-  height: 46px;
-  margin: 2px 0 4px;
-}
-.pf-phone-bars span {
-  flex: 1;
-  border-radius: 2px;
-  background: linear-gradient(180deg, #818cf8 0%, rgba(99, 102, 241, 0.25) 100%);
-}
-.pf-phone-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-/* Mockup — AI chat assistant */
-.pf-chat {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  height: 100%;
-  padding: 14px 12px;
-}
-.pf-chat-brand {
-  flex-shrink: 0;
-  width: 32%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-}
-.pf-chat-avatar {
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #6366f1 0%, #a78bfa 100%);
-}
-.pf-chat-thread {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.pf-chat-msg {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  padding: 9px 10px;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-}
-.pf-chat-lines {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .portfolio-chat-avatar {
-    animation: none;
-  }
-}
-
 /* ── CTA banner ── */
 .cta-banner-row {
   display: flex;
@@ -555,57 +214,12 @@ input, textarea, button, select {
 }
 
 /* ─────────────────────────────────────
-   TABLET  ≤ 1024px
-───────────────────────────────────── */
-@media (max-width: 1024px) {
-  .hero-layout {
-    grid-template-columns: 1fr;
-    gap: 56px;
-  }
-
-  .hero-content {
-    text-align: center;
-  }
-
-  .hero-subtitle {
-    margin: 0 auto 52px;
-  }
-
-  .hero-badge-row,
-  .hero-btn-row,
-  .hero-trust-row,
-  .hero-stats-row {
-    justify-content: center;
-  }
-
-  .hero-image-col {
-    max-width: 460px;
-    margin: 0 auto;
-  }
-}
-
-/* ─────────────────────────────────────
    TABLET  ≤ 900px
 ───────────────────────────────────── */
 @media (max-width: 900px) {
   .about-layout {
     grid-template-columns: 1fr;
     gap: 48px;
-  }
-
-  .portfolio-layout {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-
-  .portfolio-intro h2,
-  .portfolio-intro p {
-    max-width: 560px;
-  }
-
-  /* Stacked layout — 3 columns would squeeze the mockups too far */
-  .portfolio-grid {
-    grid-template-columns: repeat(2, 1fr);
   }
 
   .footer-columns {
@@ -665,10 +279,6 @@ input, textarea, button, select {
   .process-node-desc {
     margin: 0;
     max-width: none;
-  }
-
-  .portfolio-grid {
-    grid-template-columns: 1fr;
   }
 
   .footer-columns {

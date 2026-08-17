@@ -2,14 +2,12 @@
 import { useRef, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import Link from "next/link";
 
 const SERVICES = [
   {
     icon: "</>",
     title: "Web Development",
     desc: "Modern, responsive and high-performance websites and web applications tailored to your business needs.",
-    href: "/services/web-applications",
     color: "#6366f1",
     rgb: "99,102,241",
   },
@@ -17,7 +15,6 @@ const SERVICES = [
     icon: "📱",
     title: "Mobile App Development",
     desc: "User-friendly, scalable and feature-rich mobile apps for iOS and Android platforms.",
-    href: "/services/mobile-applications",
     color: "#6366f1",
     rgb: "99,102,241",
   },
@@ -25,13 +22,12 @@ const SERVICES = [
     icon: "🧠",
     title: "Data & AI",
     desc: "Intelligent solutions using data and AI to solve real-world problems and drive better decisions.",
-    href: "/services/data-ai-services",
     color: "#6366f1",
     rgb: "99,102,241",
   },
 ];
 
-export default function Services() {
+export default function Services({ scrollTo }) {
   const sectionRef = useRef(null);
   const headerRef = useRef(null);
   const cardRefs = useRef([]);
@@ -153,16 +149,17 @@ export default function Services() {
                     {service.desc}
                   </p>
                 </div>
-                <Link
-                  href={service.href}
+                <button
+                  onClick={() => scrollTo?.("contact")}
                   style={{
                     display: "inline-flex", alignItems: "center", gap: 6,
+                    background: "none", border: "none", padding: 0,
                     color: service.color, fontSize: 14, fontWeight: 700,
-                    textDecoration: "none", marginTop: 24,
+                    cursor: "pointer", marginTop: 24,
                   }}
                 >
-                  Learn more <span aria-hidden="true">→</span>
-                </Link>
+                  Get a quote <span aria-hidden="true">→</span>
+                </button>
               </div>
             </div>
           ))}

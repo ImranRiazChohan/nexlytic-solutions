@@ -1,16 +1,9 @@
 "use client";
 import { useRef } from "react";
-import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import ParticleCanvas from "./ParticleCanvas";
 import TechStack from "./TechStack";
-
-const STATS = [
-  { value: "50+", label: "Projects Delivered" },
-  { value: "3+", label: "Years of Experience" },
-  { value: "98%", label: "Client Satisfaction" },
-];
 
 export default function Hero({ scrollTo }) {
   const badgeRef = useRef(null);
@@ -18,9 +11,7 @@ export default function Hero({ scrollTo }) {
   const subRef = useRef(null);
   const btn1Ref = useRef(null);
   const btn2Ref = useRef(null);
-  const trustRef = useRef(null);
-  const statRefs = useRef([]);
-  const imageRef = useRef(null);
+  const techRef = useRef(null);
   const orb1Ref = useRef(null);
   const orb2Ref = useRef(null);
   const orb3Ref = useRef(null);
@@ -34,11 +25,7 @@ export default function Hero({ scrollTo }) {
       .from([btn1Ref.current, btn2Ref.current].filter(Boolean), {
         opacity: 0, y: 24, stagger: 0.15, duration: 0.7,
       }, "-=0.5")
-      .from(trustRef.current, { opacity: 0, y: 16, duration: 0.6 }, "-=0.3")
-      .from(statRefs.current.filter(Boolean), {
-        opacity: 0, y: 20, stagger: 0.12, duration: 0.5,
-      }, "-=0.1")
-      .from(imageRef.current, { opacity: 0, y: 40, scale: 0.94, duration: 1.1 }, "-=1.4");
+      .from(techRef.current, { opacity: 0, y: 20, duration: 0.6 }, "-=0.3");
 
     // Floating orbs
     gsap.to(orb1Ref.current, {
@@ -52,12 +39,6 @@ export default function Hero({ scrollTo }) {
     gsap.to(orb3Ref.current, {
       x: 20, y: 25, scale: 0.94,
       duration: 6, repeat: -1, yoyo: true, ease: "sine.inOut", delay: 1,
-    });
-
-    // Gentle float on the hero image
-    gsap.to(imageRef.current, {
-      y: -18,
-      duration: 4.5, repeat: -1, yoyo: true, ease: "sine.inOut",
     });
   });
 
@@ -108,7 +89,6 @@ export default function Hero({ scrollTo }) {
       <ParticleCanvas count={72} connected mouseRepel particleOpacity={0.75} />
 
       <div className="hero-layout">
-        {/* Left — copy */}
         <div className="hero-content">
           {/* Badge */}
           <div
@@ -130,19 +110,19 @@ export default function Hero({ scrollTo }) {
                 display: "inline-block",
               }}
             />
-            Digital Solutions for Modern Businesses
+            Web, Mobile & AI Development Studio
           </div>
 
           {/* Headline */}
           <h1
             ref={titleRef}
             style={{
-              fontSize: "clamp(2rem, 4.2vw, 3.4rem)",
+              fontSize: "clamp(2rem, 4.6vw, 3.6rem)",
               fontWeight: 800, color: "#ffffff",
               letterSpacing: "-1.5px", lineHeight: 1.12, marginBottom: 24,
             }}
           >
-            A Technical Catalyst for{" "}
+            We Build Web, Mobile &{" "}
             <span
               style={{
                 background: "linear-gradient(135deg, #6366f1 0%, #a78bfa 60%, #818cf8 100%)",
@@ -151,7 +131,7 @@ export default function Hero({ scrollTo }) {
                 backgroundClip: "text",
               }}
             >
-              Thoughtful Digital Experiences
+              AI Products That Work
             </span>
           </h1>
 
@@ -161,18 +141,16 @@ export default function Hero({ scrollTo }) {
             className="hero-subtitle"
             style={{
               fontSize: 17, color: "#909090",
-              maxWidth: 560, lineHeight: 1.8,
+              maxWidth: 640, lineHeight: 1.8,
             }}
           >
-            We close the gap between &ldquo;what is&rdquo; and &ldquo;what could be&rdquo; — building intelligent
-            digital products that connect and convert through strategic thinking and creative execution.
+            Nexlytic Solutions is a Karachi-based development studio. We design and build
+            websites, mobile apps, and AI-powered tools for businesses that need software
+            done right the first time.
           </p>
 
           {/* Buttons */}
-          <div className="hero-btn-row" style={{ display: "flex", gap: 16, flexWrap: "wrap", marginBottom: 52 }}>
-            {/* Entrance animation targets this wrapper, not the button itself —
-                keeps GSAP's opacity/transform tween from fighting the button's
-                own hover `transition`, which also touches those properties. */}
+          <div className="hero-btn-row" style={{ display: "flex", gap: 16, flexWrap: "wrap", marginBottom: 56 }}>
             <div ref={btn1Ref}>
               <button
                 onClick={() => scrollTo("contact")}
@@ -221,65 +199,16 @@ export default function Hero({ scrollTo }) {
                   e.currentTarget.style.transform = "translateY(0)";
                 }}
               >
-                View Our Work
+                See Our Services
               </button>
             </div>
           </div>
-
-          {/* Trust indicator */}
-          {/* <div
-            ref={trustRef}
-            className="hero-trust-row"
-            style={{ display: "flex", alignItems: "center", gap: 10, color: "#505050", fontSize: 13 }}
-          >
-            <span
-              style={{
-                width: 10, height: 10, borderRadius: "50%",
-                background: "#4ade80",
-                boxShadow: "0 0 12px rgba(74,222,128,0.6)",
-                display: "inline-block",
-              }}
-            />
-            Available for new projects · Fast response · Flexible engagements
-          </div> */}
-        </div>
-
-        {/* Right — hero image */}
-        <div ref={imageRef} className="hero-image-col">
-          <div className="hero-image-glow" />
-          <Image
-            src="/Images/HeroImage.png"
-            alt="Nexlytic Solutions product mockups — a web dashboard and a mobile finance app interface"
-            width={1074}
-            height={976}
-            preload
-            style={{ width: "100%", height: "auto" }}
-          />
         </div>
       </div>
 
-      {/* Stats */}
-      <div className="hero-stats-row">
-        <TechStack/>
-        {/* {STATS.map((stat, i) => (
-          <div key={i} ref={(el) => { statRefs.current[i] = el; }} style={{ textAlign: "center" }}>
-            <div
-              style={{
-                fontSize: "clamp(1.8rem, 3.5vw, 2.4rem)",
-                fontWeight: 900, letterSpacing: "-1.5px",
-                background: "linear-gradient(135deg, #fff 0%, #6366f1 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
-            >
-              {stat.value}
-            </div>
-            <div style={{ fontSize: 13, color: "#505050", marginTop: 6, letterSpacing: "0.02em" }}>
-              {stat.label}
-            </div>
-          </div>
-        ))} */}
+      {/* Tech stack row */}
+      <div ref={techRef} className="hero-stats-row">
+        <TechStack />
       </div>
     </section>
   );
