@@ -1,20 +1,23 @@
-import Image from "next/image";
+import LogoIcon from "./LogoIcon";
 
-const LOGO_ASPECT = 697 / 273;
-
-export default function Logo({ size = 34, showWordmark = true, wordmarkColor = "#fff" }) {
+export default function Logo({ size = 34, showWordmark = true }) {
   return (
     <span style={{ display: "inline-flex", alignItems: "center", gap: size * 0.32 }}>
-      <Image
-        src="/logo.png"
-        alt="Nexlytic Solutions logo"
-        width={Math.round(size * LOGO_ASPECT)}
-        height={size}
-        style={{ height: size, width: "auto" }}
-      />
+      <LogoIcon size={size} />
       {showWordmark && (
-        <span style={{ fontSize: size * 0.62, fontWeight: 900, letterSpacing: "-0.5px", color: wordmarkColor }}>
-          Nexlytic
+        <span
+          style={{
+            fontSize: size * 0.5,
+            fontWeight: 900,
+            letterSpacing: "-0.4px",
+            whiteSpace: "nowrap",
+            background: "linear-gradient(135deg, #6366f1 0%, #a78bfa 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+          }}
+        >
+          Nexlytic Solutions
         </span>
       )}
     </span>
