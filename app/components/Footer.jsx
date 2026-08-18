@@ -65,7 +65,7 @@ export default function Footer() {
               <Logo size={30} />
             </div>
             <p style={{ color: "#808080", fontSize: 14, lineHeight: 1.75, marginBottom: 22 }}>
-              A Karachi-based studio building websites, mobile apps, and AI-driven tools for growing businesses.
+              A studio building websites, mobile apps, and AI-driven tools for growing businesses worldwide.
             </p>
           </div>
 

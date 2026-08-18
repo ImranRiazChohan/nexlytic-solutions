@@ -8,14 +8,14 @@ const siteUrl = "https://nexlyticsolutions.com";
 export const metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Nexlytic Solutions — Web, Mobile & AI Development in Karachi",
+    default: "Nexlytic Solutions — Web, Mobile & AI Development Studio",
     template: "%s | Nexlytic Solutions",
   },
   description:
-    "Nexlytic Solutions is a Karachi-based development studio building websites, mobile apps, and AI-powered tools for businesses. Get a free quote for your next project.",
+    "Nexlytic Solutions is a development studio building websites, mobile apps, and AI-powered tools for businesses worldwide. Get a free quote for your next project.",
   keywords: [
-    "web development Karachi",
-    "mobile app development Pakistan",
+    "web development company",
+    "mobile app development company",
     "AI development company",
     "custom software development",
     "Next.js development agency",
@@ -25,7 +25,7 @@ export const metadata = {
   robots: { index: true, follow: true },
   alternates: { canonical: siteUrl },
   openGraph: {
-    title: "Nexlytic Solutions — Web, Mobile & AI Development in Karachi",
+    title: "Nexlytic Solutions — Web, Mobile & AI Development Studio",
     description:
       "We design and build websites, mobile apps, and AI-powered tools for businesses that need software done right the first time.",
     url: siteUrl,
@@ -35,7 +35,7 @@ export const metadata = {
   },
   twitter: {
     card: "summary",
-    title: "Nexlytic Solutions — Web, Mobile & AI Development in Karachi",
+    title: "Nexlytic Solutions — Web, Mobile & AI Development Studio",
     description:
       "We design and build websites, mobile apps, and AI-powered tools for businesses that need software done right the first time.",
   },
@@ -51,8 +51,8 @@ const structuredData = {
   name: "Nexlytic Solutions",
   url: siteUrl,
   description:
-    "Karachi-based development studio building websites, mobile apps, and AI-powered tools for businesses.",
-  areaServed: "PK",
+    "Development studio building websites, mobile apps, and AI-powered tools for businesses worldwide.",
+  areaServed: "Worldwide",
   address: {
     "@type": "PostalAddress",
     addressLocality: "Karachi",

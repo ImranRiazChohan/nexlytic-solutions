@@ -144,9 +144,9 @@ export default function Hero({ scrollTo }) {
               maxWidth: 640, lineHeight: 1.8,
             }}
           >
-            Nexlytic Solutions is a Karachi-based development studio. We design and build
-            websites, mobile apps, and AI-powered tools for businesses that need software
-            done right the first time.
+            Nexlytic Solutions is a development studio that designs and builds websites,
+            mobile apps, and AI-powered tools for businesses anywhere in the world that
+            need software done right the first time.
           </p>
 
           {/* Buttons */}

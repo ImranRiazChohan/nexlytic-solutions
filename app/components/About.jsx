@@ -124,8 +124,8 @@ export default function About({ scrollTo }) {
               maxWidth: 580, lineHeight: 1.75, margin: "0 auto",
             }}
           >
-            A Karachi-based digital agency building data-driven web apps, mobile
-            experiences, and AI agents that help businesses scale smarter and move faster.
+            A digital agency building data-driven web apps, mobile experiences, and AI
+            agents for businesses around the world, so they can scale smarter and move faster.
           </p>
         </div>
 
