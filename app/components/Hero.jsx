@@ -2,7 +2,6 @@
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import Image from "next/image";
 import ParticleCanvas from "./ParticleCanvas";
 import TechStack from "./TechStack";
 
@@ -12,7 +11,6 @@ export default function Hero({ scrollTo }) {
   const subRef = useRef(null);
   const btn1Ref = useRef(null);
   const btn2Ref = useRef(null);
-  const visualRef = useRef(null);
   const techRef = useRef(null);
   const orb1Ref = useRef(null);
   const orb2Ref = useRef(null);
@@ -27,7 +25,6 @@ export default function Hero({ scrollTo }) {
       .from([btn1Ref.current, btn2Ref.current].filter(Boolean), {
         opacity: 0, y: 24, stagger: 0.15, duration: 0.7,
       }, "-=0.5")
-      .from(visualRef.current, { opacity: 0, y: 40, scale: 0.97, duration: 0.9 }, "-=0.3")
       .from(techRef.current, { opacity: 0, y: 20, duration: 0.6 }, "-=0.3");
 
     // Floating orbs
@@ -207,18 +204,6 @@ export default function Hero({ scrollTo }) {
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Product visual */}
-      <div ref={visualRef} className="hero-visual">
-        <div className="hero-visual-glow" />
-        <Image
-          src="/Images/HeroImage.png"
-          alt="Nexlytic Solutions product mockups — a web dashboard and a mobile app interface"
-          width={1074}
-          height={976}
-          style={{ width: "100%", height: "auto", display: "block" }}
-        />
       </div>
 
       {/* Tech stack row */}
