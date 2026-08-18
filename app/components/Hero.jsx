@@ -144,7 +144,7 @@ export default function Hero({ scrollTo }) {
               maxWidth: 640, lineHeight: 1.8,
             }}
           >
-            Nexlytic Solutions is a development studio that designs and builds websites,
+            Nexlytics Solutions is a development studio that designs and builds websites,
             mobile apps, and AI-powered tools for businesses anywhere in the world that
             need software done right the first time.
           </p>

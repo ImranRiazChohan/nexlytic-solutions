@@ -3,16 +3,16 @@ import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
-const siteUrl = "https://nexlyticsolutions.com";
+const siteUrl = "https://nexlyticssolutions.com";
 
 export const metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Nexlytic Solutions — Web, Mobile & AI Development Studio",
-    template: "%s | Nexlytic Solutions",
+    default: "Nexlytics Solutions — Web, Mobile & AI Development Studio",
+    template: "%s | Nexlytics Solutions",
   },
   description:
-    "Nexlytic Solutions is a development studio building websites, mobile apps, and AI-powered tools for businesses worldwide. Get a free quote for your next project.",
+    "Nexlytics Solutions is a development studio building websites, mobile apps, and AI-powered tools for businesses worldwide. Get a free quote for your next project.",
   keywords: [
     "web development company",
     "mobile app development company",
@@ -21,21 +21,21 @@ export const metadata = {
     "Next.js development agency",
     "startup web design",
   ],
-  authors: [{ name: "Nexlytic Solutions" }],
+  authors: [{ name: "Nexlytics Solutions" }],
   robots: { index: true, follow: true },
   alternates: { canonical: siteUrl },
   openGraph: {
-    title: "Nexlytic Solutions — Web, Mobile & AI Development Studio",
+    title: "Nexlytics Solutions — Web, Mobile & AI Development Studio",
     description:
       "We design and build websites, mobile apps, and AI-powered tools for businesses that need software done right the first time.",
     url: siteUrl,
-    siteName: "Nexlytic Solutions",
+    siteName: "Nexlytics Solutions",
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary",
-    title: "Nexlytic Solutions — Web, Mobile & AI Development Studio",
+    title: "Nexlytics Solutions — Web, Mobile & AI Development Studio",
     description:
       "We design and build websites, mobile apps, and AI-powered tools for businesses that need software done right the first time.",
   },
@@ -48,7 +48,7 @@ export const viewport = {
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
-  name: "Nexlytic Solutions",
+  name: "Nexlytics Solutions",
   url: siteUrl,
   description:
     "Development studio building websites, mobile apps, and AI-powered tools for businesses worldwide.",
@@ -59,7 +59,7 @@ const structuredData = {
     addressCountry: "PK",
   },
   telephone: "+92-333-4886288",
-  email: "info@nexlytic.com",
+  email: "info@nexlytics.com",
 };
 
 export default function RootLayout({ children }) {

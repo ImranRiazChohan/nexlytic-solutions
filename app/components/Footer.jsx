@@ -104,12 +104,12 @@ export default function Footer() {
             </h4>
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
               <a
-                href="mailto:info@nexlytic.com"
+                href="mailto:info@nexlytics.com"
                 style={{ ...linkStyle, display: "flex", alignItems: "center", gap: 10 }}
                 onMouseEnter={(e) => (e.currentTarget.style.color = "#6366f1")}
                 onMouseLeave={(e) => (e.currentTarget.style.color = "#808080")}
               >
-                <span aria-hidden="true">✉</span> info@nexlytic.com
+                <span aria-hidden="true">✉</span> info@nexlytics.com
               </a>
               <a
                 href="tel:+923334886288"
@@ -179,7 +179,7 @@ export default function Footer() {
           }}
         >
           <p style={{ color: "#606060", fontSize: 14 }}>
-            © {currentYear} Nexlytic Solutions. All rights reserved.
+            © {currentYear} Nexlytics Solutions. All rights reserved.
           </p>
         </div>
       </div>

@@ -101,7 +101,7 @@ export default function About({ scrollTo }) {
                 display: "inline-block", flexShrink: 0,
               }}
             />
-            About Nexlytic Solutions
+            About Nexlytics Solutions
           </div>
 
           {/* Headline */}

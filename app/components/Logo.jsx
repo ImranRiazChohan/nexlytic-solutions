@@ -17,7 +17,7 @@ export default function Logo({ size = 34, showWordmark = true }) {
             backgroundClip: "text",
           }}
         >
-          Nexlytic Solutions
+          Nexlytics Solutions
         </span>
       )}
     </span>
