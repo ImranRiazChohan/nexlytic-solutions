@@ -2,13 +2,14 @@
 import { useRef, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { SearchIcon, ClipboardIcon, PencilIcon, CodeIcon, RocketIcon } from "./Icons";
 
 const STEPS = [
-  { number: "01", title: "Discover", desc: "We understand your idea, goals and requirements.", icon: "🔍" },
-  { number: "02", title: "Plan", desc: "We strategize, define scope and create a roadmap.", icon: "📋" },
-  { number: "03", title: "Design", desc: "We design intuitive and engaging user experiences.", icon: "✏️" },
-  { number: "04", title: "Develop", desc: "We build robust, scalable and secure solutions.", icon: "</>" },
-  { number: "05", title: "Deliver", desc: "We test, deploy and support your product for growth.", icon: "🚀" },
+  { number: "01", title: "Discover", desc: "We understand your idea, goals and requirements.", Icon: SearchIcon },
+  { number: "02", title: "Plan", desc: "We strategize, define scope and create a roadmap.", Icon: ClipboardIcon },
+  { number: "03", title: "Design", desc: "We design intuitive and engaging user experiences.", Icon: PencilIcon },
+  { number: "04", title: "Develop", desc: "We build robust, scalable and secure solutions.", Icon: CodeIcon },
+  { number: "05", title: "Deliver", desc: "We test, deploy and support your product for growth.", Icon: RocketIcon },
 ];
 
 export default function Process() {
@@ -51,7 +52,7 @@ export default function Process() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="process" className="section-pad" style={{ position: "relative", overflow: "hidden" }}>
+    <section ref={sectionRef} id="process" className="section-pad section-alt" style={{ position: "relative", overflow: "hidden" }}>
       <div
         style={{
           position: "absolute", top: "50%", left: "50%",
@@ -107,7 +108,7 @@ export default function Process() {
               className="process-node"
             >
               <div className="process-node-icon">
-                {step.icon}
+                <step.Icon size={24} color="#6366f1" strokeWidth={1.6} />
                 <span className="process-node-number">{step.number}</span>
               </div>
               <h3 style={{ fontSize: 16, fontWeight: 800, color: "#fff", marginTop: 20, marginBottom: 8 }}>

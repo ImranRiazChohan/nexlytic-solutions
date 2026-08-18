@@ -2,25 +2,26 @@
 import { useRef, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { BoltIcon, ShieldIcon, UsersIcon, TrendingUpIcon } from "./Icons";
 
 const WHY_REASONS = [
   {
-    icon: "🚀",
+    Icon: BoltIcon,
     title: "Innovative Solutions",
     desc: "We use the latest technologies to build future-ready products.",
   },
   {
-    icon: "🛡️",
+    Icon: ShieldIcon,
     title: "Quality & Reliability",
     desc: "We follow best practices to ensure high quality and on-time delivery.",
   },
   {
-    icon: "👥",
+    Icon: UsersIcon,
     title: "Client-Centric Approach",
     desc: "Your goals are our priority. We work as your technology partner.",
   },
   {
-    icon: "📈",
+    Icon: TrendingUpIcon,
     title: "Scalable & Future-Ready",
     desc: "We build solutions that grow with your business.",
   },
@@ -124,10 +125,10 @@ export default function WhyChooseUs() {
                   border: "1px solid rgba(99,102,241,0.3)",
                   background: "rgba(99,102,241,0.06)",
                   display: "flex", alignItems: "center", justifyContent: "center",
-                  fontSize: 28, margin: "0 auto 22px",
+                  margin: "0 auto 22px",
                 }}
               >
-                {reason.icon}
+                <reason.Icon size={26} color="#6366f1" strokeWidth={1.6} />
               </div>
               <h3 style={{ fontSize: 16, fontWeight: 800, color: "#fff", marginBottom: 10 }}>
                 {reason.title}

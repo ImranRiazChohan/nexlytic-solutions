@@ -64,6 +64,7 @@ export default function About({ scrollTo }) {
     <section
       ref={sectionRef}
       id="about"
+      className="section-alt"
       style={{ padding: "120px 5%", position: "relative", overflow: "hidden" }}
     >
       {/* Background glow */}

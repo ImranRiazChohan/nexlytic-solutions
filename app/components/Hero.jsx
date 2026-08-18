@@ -5,12 +5,64 @@ import gsap from "gsap";
 import ParticleCanvas from "./ParticleCanvas";
 import TechStack from "./TechStack";
 
+function HeroMockup() {
+  return (
+    <div className="hero-mock" aria-hidden="true">
+      <div className="hero-mock-bar">
+        <span className="hero-mock-dot" />
+        <span className="hero-mock-dot" />
+        <span className="hero-mock-dot" />
+        <span className="hero-mock-url" />
+      </div>
+      <div className="hero-mock-body">
+        <div className="hero-mock-side">
+          {[0, 1, 2, 3, 4].map((i) => (
+            <span key={i} className={`hero-mock-nav${i === 1 ? " is-active" : ""}`} />
+          ))}
+        </div>
+        <div className="hero-mock-main">
+          <div className="hero-mock-stats">
+            {[0, 1, 2].map((i) => (
+              <div key={i} className="hero-mock-stat">
+                <span className="hero-mock-stat-line" style={{ width: "70%" }} />
+                <span className="hero-mock-stat-line is-strong" />
+              </div>
+            ))}
+          </div>
+          <div className="hero-mock-chart">
+            <svg viewBox="0 0 300 100" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="heroChartFill" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#6366f1" stopOpacity="0.5" />
+                  <stop offset="100%" stopColor="#6366f1" stopOpacity="0" />
+                </linearGradient>
+              </defs>
+              <path
+                d="M0 78 L40 60 L80 68 L120 34 L160 50 L200 20 L240 38 L300 12 L300 100 L0 100 Z"
+                fill="url(#heroChartFill)"
+              />
+              <path
+                d="M0 78 L40 60 L80 68 L120 34 L160 50 L200 20 L240 38 L300 12"
+                fill="none"
+                stroke="#818cf8"
+                strokeWidth="2"
+                vectorEffect="non-scaling-stroke"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Hero({ scrollTo }) {
   const badgeRef = useRef(null);
   const titleRef = useRef(null);
   const subRef = useRef(null);
   const btn1Ref = useRef(null);
   const btn2Ref = useRef(null);
+  const visualRef = useRef(null);
   const techRef = useRef(null);
   const orb1Ref = useRef(null);
   const orb2Ref = useRef(null);
@@ -25,6 +77,7 @@ export default function Hero({ scrollTo }) {
       .from([btn1Ref.current, btn2Ref.current].filter(Boolean), {
         opacity: 0, y: 24, stagger: 0.15, duration: 0.7,
       }, "-=0.5")
+      .from(visualRef.current, { opacity: 0, y: 40, scale: 0.97, duration: 0.9 }, "-=0.3")
       .from(techRef.current, { opacity: 0, y: 20, duration: 0.6 }, "-=0.3");
 
     // Floating orbs
@@ -204,6 +257,12 @@ export default function Hero({ scrollTo }) {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Decorative product mockup */}
+      <div ref={visualRef} className="hero-visual">
+        <div className="hero-visual-glow" />
+        <HeroMockup />
       </div>
 
       {/* Tech stack row */}

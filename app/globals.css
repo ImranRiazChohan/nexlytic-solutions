@@ -25,6 +25,17 @@ input, textarea, button, select {
   color: #fff;
 }
 
+/* Visible only for keyboard navigation, not mouse clicks */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid #818cf8;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -84,6 +95,117 @@ input, textarea, button, select {
   justify-content: center;
 }
 
+/* ── Hero decorative mockup ── */
+.hero-visual {
+  position: relative;
+  z-index: 2;
+  max-width: 720px;
+  margin: 56px auto 0;
+  width: 100%;
+}
+.hero-visual-glow {
+  position: absolute;
+  inset: -16%;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.22) 0%, transparent 70%);
+  filter: blur(50px);
+  pointer-events: none;
+  z-index: -1;
+}
+.hero-mock {
+  border-radius: 18px;
+  border: 1px solid #1c1c1c;
+  background: linear-gradient(160deg, #111114 0%, #0b0b0d 100%);
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+}
+.hero-mock-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.hero-mock-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.14);
+}
+.hero-mock-url {
+  margin-left: 10px;
+  flex: 1;
+  max-width: 220px;
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.06);
+}
+.hero-mock-body {
+  display: flex;
+  min-height: 240px;
+}
+.hero-mock-side {
+  width: 15%;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px 12px;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+}
+.hero-mock-nav {
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.08);
+}
+.hero-mock-nav.is-active {
+  background: #6366f1;
+}
+.hero-mock-main {
+  flex: 1;
+  min-width: 0;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.hero-mock-stats {
+  display: flex;
+  gap: 14px;
+}
+.hero-mock-stat {
+  flex: 1;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+.hero-mock-stat-line {
+  display: block;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.09);
+  margin-bottom: 8px;
+}
+.hero-mock-stat-line.is-strong {
+  background: rgba(99, 102, 241, 0.55);
+  width: 46%;
+  margin-bottom: 0;
+}
+.hero-mock-chart {
+  flex: 1;
+  min-height: 90px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  position: relative;
+  overflow: hidden;
+}
+.hero-mock-chart svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
 /* ── Nav ── */
 .desktop-nav {
   display: flex;
@@ -105,6 +227,11 @@ input, textarea, button, select {
 /* ── Section padding helper ── */
 .section-pad {
   padding: 100px 5%;
+}
+
+/* Subtle alternating tint so consecutive sections don't blend into one flat block */
+.section-alt {
+  background: #0c0c0f;
 }
 
 /* ── About section ── */
@@ -249,6 +376,19 @@ input, textarea, button, select {
 
   .hero-stats-row {
     gap: 32px;
+  }
+
+  .hero-visual {
+    margin-top: 40px;
+  }
+  .hero-mock-body {
+    min-height: 200px;
+  }
+  .hero-mock-side {
+    width: 12%;
+  }
+  .hero-mock-stats {
+    gap: 10px;
   }
 
   /* Process row collapses to a single stacked column, line goes vertical */

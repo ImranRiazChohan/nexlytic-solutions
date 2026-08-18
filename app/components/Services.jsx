@@ -2,10 +2,11 @@
 import { useRef, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { CodeIcon, PhoneIcon, NetworkIcon } from "./Icons";
 
 const SERVICES = [
   {
-    icon: "</>",
+    Icon: CodeIcon,
     title: "Web Development",
     desc: "Fast, responsive websites and web apps built on modern frameworks.",
     features: [
@@ -19,7 +20,7 @@ const SERVICES = [
     rgb: "99,102,241",
   },
   {
-    icon: "📱",
+    Icon: PhoneIcon,
     title: "Mobile App Development",
     desc: "Smooth, reliable apps for iOS and Android, built to scale from day one.",
     features: [
@@ -33,7 +34,7 @@ const SERVICES = [
     rgb: "99,102,241",
   },
   {
-    icon: "🧠",
+    Icon: NetworkIcon,
     title: "Data & AI",
     desc: "Data pipelines, analytics, and AI tools that turn information into decisions.",
     features: [
@@ -157,11 +158,11 @@ export default function Services({ scrollTo }) {
                       width: 56, height: 56, borderRadius: 16,
                       background: `linear-gradient(135deg, ${service.color} 0%, rgba(${service.rgb},0.6) 100%)`,
                       display: "flex", alignItems: "center", justifyContent: "center",
-                      fontSize: 24, fontWeight: 700, color: "#fff", marginBottom: 24,
+                      marginBottom: 24,
                       boxShadow: `0 10px 28px rgba(${service.rgb},0.35)`,
                     }}
                   >
-                    {service.icon}
+                    <service.Icon size={26} color="#fff" strokeWidth={1.8} />
                   </div>
                   <h3 style={{ fontSize: 20, fontWeight: 800, color: "#fff", marginBottom: 12 }}>
                     {service.title}
