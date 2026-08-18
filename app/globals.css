@@ -267,10 +267,6 @@ select:focus-visible {
     gap: 32px;
   }
 
-  .hero-visual {
-    margin-top: 40px;
-  }
-
   /* Process row collapses to a single stacked column, line goes vertical */
   .process-row {
     flex-direction: column;
