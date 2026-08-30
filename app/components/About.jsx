@@ -64,6 +64,7 @@ export default function About({ scrollTo }) {
     <section
       ref={sectionRef}
       id="about"
+      className="section-alt"
       style={{ padding: "120px 5%", position: "relative", overflow: "hidden" }}
     >
       {/* Background glow */}
@@ -100,7 +101,7 @@ export default function About({ scrollTo }) {
                 display: "inline-block", flexShrink: 0,
               }}
             />
-            About Nexlytic Solutions
+            About Nexlytics Solutions
           </div>
 
           {/* Headline */}
@@ -123,8 +124,8 @@ export default function About({ scrollTo }) {
               maxWidth: 580, lineHeight: 1.75, margin: "0 auto",
             }}
           >
-            A Karachi-based digital agency building data-driven web apps, mobile
-            experiences, and AI agents that help businesses scale smarter and move faster.
+            A digital agency building data-driven web apps, mobile experiences, and AI
+            agents for businesses around the world, so they can scale smarter and move faster.
           </p>
         </div>
 
@@ -142,19 +143,18 @@ export default function About({ scrollTo }) {
               }}
             >
               <p style={{ fontSize: 16, color: "#c0c0c0", lineHeight: 1.85 }}>
-                Our multidisciplinary team combines{" "}
-                <strong style={{ color: "#fff", fontWeight: 700 }}>deep technical expertise</strong>{" "}
-                with{" "}
-                <strong style={{ color: "#fff", fontWeight: 700 }}>creative thinking</strong>{" "}
-                — delivering solutions that are not just functional, but{" "}
-                <span style={{ color: "#6366f1", fontWeight: 600 }}>exceptional</span>.
+                We&rsquo;re a small team of{" "}
+                <strong style={{ color: "#fff", fontWeight: 700 }}>engineers and designers</strong>{" "}
+                who&rsquo;d rather ship something{" "}
+                <span style={{ color: "#6366f1", fontWeight: 600 }}>solid</span>{" "}
+                than pad a proposal with buzzwords.
               </p>
             </div>
 
             {/* Secondary paragraph */}
             <p style={{ fontSize: 15, color: "#505050", lineHeight: 1.9, marginBottom: 40 }}>
-              We don&rsquo;t just build software. We build partnerships. Every project is a
-              shared journey from rough idea to polished, production-ready product.
+              You&rsquo;ll talk directly to the people writing your code — no account
+              managers relaying messages between you and the developers.
             </p>
 
             {/* CTA row */}

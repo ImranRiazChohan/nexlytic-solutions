@@ -2,11 +2,10 @@
 import Navigation from "./components/Navigation";
 import Hero from "./components/Hero";
 import Services from "./components/Services";
-import WhyChooseUs from "./components/WhyChooseUs";
 import Process from "./components/Process";
-import Testimonials from "./components/Testimonials";
-import CTA from "./components/CTA";
+import WhyChooseUs from "./components/WhyChooseUs";
 import About from "./components/About";
+import CTA from "./components/CTA";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 
@@ -23,16 +22,11 @@ export default function Home() {
       <Navigation scrollTo={scrollTo} />
       <Hero scrollTo={scrollTo} />
       <div id="services">
-        <Services />
+        <Services scrollTo={scrollTo} />
       </div>
+      <Process />
+      <WhyChooseUs />
       <About scrollTo={scrollTo} />
-      <div id="why">
-        <WhyChooseUs />
-      </div>
-      <div id="process">
-        <Process />
-      </div>
-      <Testimonials />
       <CTA scrollTo={scrollTo} />
       <div id="contact">
         <Contact />

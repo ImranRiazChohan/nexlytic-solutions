@@ -1,57 +1,75 @@
 "use client";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { CodeIcon, PhoneIcon, NetworkIcon } from "./Icons";
 
 const SERVICES = [
   {
-    icon: "🚀",
-    title: "Mobile Applications",
-    desc: "Native and cross-platform apps for iOS and Android — built for performance and a polished user experience.",
-    tags: ["React Native", "Flutter", "iOS & Android"],
-    color: "#f59e0b",
-  },
-  {
-    icon: "⚡",
-    title: "Web Applications",
-    desc: "Scalable, high-performance web applications built with modern frameworks — fast, secure, and SEO-ready.",
-    tags: ["Next.js / React", "Node.js", "REST & GraphQL"],
+    Icon: CodeIcon,
+    title: "Web Development",
+    desc: "Fast, responsive websites and web apps built on modern frameworks.",
+    features: [
+      "Custom websites & landing pages",
+      "E-commerce stores",
+      "Admin dashboards & SaaS platforms",
+      "API development & integrations",
+    ],
+    tags: ["Next.js", "React", "Node.js"],
     color: "#6366f1",
+    rgb: "99,102,241",
   },
   {
-    icon: "🧠",
-    title: "Data & AI Services",
-    desc: "End-to-end data solutions and AI-powered chatbots that drive smarter decisions and automate workflows.",
-    tags: ["Data Engineering", "LLM Integration", "BI & Analytics"],
-    color: "#10b981",
+    Icon: PhoneIcon,
+    title: "Mobile App Development",
+    desc: "Smooth, reliable apps for iOS and Android, built to scale from day one.",
+    features: [
+      "Cross-platform apps (iOS & Android)",
+      "App Store & Play Store deployment",
+      "Push notifications & in-app payments",
+      "Post-launch support & updates",
+    ],
+    tags: ["React Native", "Flutter", "Firebase"],
+    color: "#6366f1",
+    rgb: "99,102,241",
+  },
+  {
+    Icon: NetworkIcon,
+    title: "Data & AI",
+    desc: "Data pipelines, analytics, and AI tools that turn information into decisions.",
+    features: [
+      "Data engineering & ETL pipelines",
+      "Data analytics & BI dashboards",
+      "Data science & predictive models",
+      "Chatbots & AI agents (LLM-powered)",
+    ],
+    tags: ["Python", "LangChain", "Power BI"],
+    color: "#6366f1",
+    rgb: "99,102,241",
   },
 ];
 
-export default function Services() {
+export default function Services({ scrollTo }) {
   const sectionRef = useRef(null);
   const headerRef = useRef(null);
   const cardRefs = useRef([]);
-  const [hoveredCard, setHoveredCard] = useState(null);
 
-  // Set initial hidden state before first paint
   useGSAP(() => {
     gsap.set(headerRef.current, { opacity: 0, y: 40 });
     cardRefs.current.forEach((el) => {
-      if (el) gsap.set(el, { opacity: 0, y: 60 });
+      if (el) gsap.set(el, { opacity: 0, y: 50 });
     });
   });
 
-  // Reveal with IntersectionObserver when section enters viewport
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
-
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting) return;
         gsap.to(headerRef.current, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" });
         gsap.to(cardRefs.current.filter(Boolean), {
-          opacity: 1, y: 0, duration: 0.8, ease: "power3.out", stagger: 0.15, delay: 0.25,
+          opacity: 1, y: 0, duration: 0.8, ease: "power3.out", stagger: 0.14, delay: 0.2,
         });
         observer.disconnect();
       },
@@ -62,23 +80,19 @@ export default function Services() {
   }, []);
 
   return (
-    <section
-      ref={sectionRef}
-      style={{ padding: "120px 5%", position: "relative", overflow: "hidden" }}
-    >
+    <section ref={sectionRef} className="section-pad" style={{ position: "relative", overflow: "hidden" }}>
       <div
         style={{
-          position: "absolute", top: "50%", left: "50%",
+          position: "absolute", top: "30%", left: "50%",
           transform: "translate(-50%,-50%)",
-          width: 700, height: 700, borderRadius: "50%",
+          width: 800, height: 800, borderRadius: "50%",
           background: "radial-gradient(circle, rgba(99,102,241,0.04) 0%, transparent 70%)",
           pointerEvents: "none",
         }}
       />
 
       <div style={{ maxWidth: 1200, margin: "0 auto", position: "relative", zIndex: 2 }}>
-        {/* Header */}
-        <div ref={headerRef} style={{ textAlign: "center", marginBottom: 80 }}>
+        <div ref={headerRef} style={{ textAlign: "center", marginBottom: 72 }}>
           <div
             style={{
               display: "inline-flex", alignItems: "center", gap: 9,
@@ -96,60 +110,104 @@ export default function Services() {
                 display: "inline-block", flexShrink: 0,
               }}
             />
-            Our Expertise
+            Our Services
           </div>
-          <h2 style={{ fontSize: "clamp(1.6rem, 3.5vw, 2.6rem)", fontWeight: 800, color: "#fff", letterSpacing: "-0.8px", lineHeight: 1.1, marginBottom: 20 }}>
-            What Exactly Do We Do?
+          <h2
+            style={{
+              fontSize: "clamp(1.6rem, 3.5vw, 2.6rem)",
+              fontWeight: 800, color: "#fff",
+              letterSpacing: "-0.8px", lineHeight: 1.1, marginBottom: 20,
+            }}
+          >
+            What We Do
           </h2>
-          <p style={{ color: "#707070", fontSize: 15, maxWidth: 580, lineHeight: 1.75, margin: "0 auto" }}>
-            We specialize in building intelligent digital products that solve real business problems.
+          <p style={{ color: "#707070", fontSize: 15, maxWidth: 560, lineHeight: 1.75, margin: "0 auto" }}>
+            End-to-end digital solutions to help your business innovate, automate and scale.
           </p>
         </div>
 
-        {/* Grid */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 24 }}>
-          {SERVICES.map((service, i) => {
-            const isHovered = hoveredCard === i;
-            return (
+        <div className="services-grid">
+          {SERVICES.map((service, i) => (
+            // Outer element carries the GSAP entrance ref (opacity/transform);
+            // the inner element carries the hover `transition` (also transform) —
+            // kept on separate elements so the two animations don't fight.
+            <div key={service.title} ref={(el) => { cardRefs.current[i] = el; }} style={{ height: "100%" }}>
               <div
-                key={i}
-                ref={(el) => { cardRefs.current[i] = el; }}
-                onMouseEnter={() => setHoveredCard(i)}
-                onMouseLeave={() => setHoveredCard(null)}
                 style={{
-                  background: isHovered ? `linear-gradient(135deg, ${service.color}0d 0%, #0d0d0d 100%)` : "#0d0d0d",
-                  border: `1px solid ${isHovered ? service.color + "40" : "#1a1a1a"}`,
-                  borderRadius: 20, padding: "40px 32px",
-                  cursor: "default", position: "relative", overflow: "hidden",
-                  transition: "border-color 0.4s ease, background 0.4s ease, box-shadow 0.4s ease",
-                  transform: isHovered ? "translateY(-10px)" : "translateY(0)",
-                  boxShadow: isHovered ? `0 24px 64px ${service.color}20` : "none",
+                  height: "100%",
+                  display: "flex", flexDirection: "column",
+                  background: "#0d0d0d",
+                  border: "1px solid #191919",
+                  borderRadius: 20, padding: "36px 32px",
+                  transition: "border-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s ease",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = service.color + "50";
+                  e.currentTarget.style.boxShadow = `0 24px 60px rgba(${service.rgb},0.14)`;
+                  e.currentTarget.style.transform = "translateY(-6px)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = "#191919";
+                  e.currentTarget.style.boxShadow = "none";
+                  e.currentTarget.style.transform = "translateY(0)";
                 }}
               >
-                <div style={{ position: "absolute", top: 0, left: "15%", right: "15%", height: 2, background: `linear-gradient(90deg, transparent, ${service.color}, transparent)`, opacity: isHovered ? 1 : 0, transition: "opacity 0.4s ease" }} />
-                <div style={{ position: "absolute", top: -50, right: -50, width: 160, height: 160, borderRadius: "50%", background: `radial-gradient(circle, ${service.color}18, transparent 70%)`, opacity: isHovered ? 1 : 0, transition: "opacity 0.4s ease", pointerEvents: "none" }} />
-
-                <div style={{ position: "relative", zIndex: 2 }}>
-                  <div style={{ width: 64, height: 64, borderRadius: 18, background: isHovered ? `${service.color}18` : "#111", border: `1px solid ${isHovered ? service.color + "40" : "#1e1e1e"}`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 30, marginBottom: 24, transition: "all 0.4s ease", transform: isHovered ? "scale(1.12) rotate(-4deg)" : "scale(1) rotate(0deg)" }}>
-                    {service.icon}
+                <div style={{ flex: 1 }}>
+                  <div
+                    style={{
+                      width: 56, height: 56, borderRadius: 16,
+                      background: `linear-gradient(135deg, ${service.color} 0%, rgba(${service.rgb},0.6) 100%)`,
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      marginBottom: 24,
+                      boxShadow: `0 10px 28px rgba(${service.rgb},0.35)`,
+                    }}
+                  >
+                    <service.Icon size={26} color="#fff" strokeWidth={1.8} />
                   </div>
-                  <h3 style={{ fontSize: 20, fontWeight: 800, color: "#fff", marginBottom: 12, lineHeight: 1.3 }}>
+                  <h3 style={{ fontSize: 20, fontWeight: 800, color: "#fff", marginBottom: 12 }}>
                     {service.title}
                   </h3>
-                  <p style={{ fontSize: 15, color: isHovered ? "#959595" : "#606060", lineHeight: 1.75, marginBottom: 24, transition: "color 0.3s" }}>
+                  <p style={{ fontSize: 14, color: "#707070", lineHeight: 1.8, marginBottom: 20 }}>
                     {service.desc}
                   </p>
+                  <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 10, marginBottom: 22 }}>
+                    {service.features.map((f) => (
+                      <li key={f} style={{ display: "flex", alignItems: "flex-start", gap: 9, fontSize: 13.5, color: "#909090", lineHeight: 1.5 }}>
+                        <span style={{ color: service.color, flexShrink: 0, marginTop: 1 }}>✓</span>
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
                   <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-                    {service.tags.map((tag, j) => (
-                      <span key={j} style={{ display: "inline-block", background: `${service.color}12`, border: `1px solid ${service.color}30`, color: service.color, borderRadius: 8, padding: "6px 12px", fontSize: 12, fontWeight: 600, opacity: isHovered ? 1 : 0.65, transition: "opacity 0.3s ease" }}>
+                    {service.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        style={{
+                          fontSize: 11.5, fontWeight: 600, color: service.color,
+                          background: `rgba(${service.rgb},0.1)`,
+                          border: `1px solid rgba(${service.rgb},0.28)`,
+                          borderRadius: 100, padding: "5px 11px",
+                        }}
+                      >
                         {tag}
                       </span>
                     ))}
                   </div>
                 </div>
+                <button
+                  onClick={() => scrollTo?.("contact")}
+                  style={{
+                    display: "inline-flex", alignItems: "center", gap: 6,
+                    background: "none", border: "none", padding: 0,
+                    color: service.color, fontSize: 14, fontWeight: 700,
+                    cursor: "pointer", marginTop: 24,
+                  }}
+                >
+                  Get a quote <span aria-hidden="true">→</span>
+                </button>
               </div>
-            );
-          })}
+            </div>
+          ))}
         </div>
       </div>
     </section>

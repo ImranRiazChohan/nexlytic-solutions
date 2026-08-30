@@ -25,6 +25,17 @@ input, textarea, button, select {
   color: #fff;
 }
 
+/* Visible only for keyboard navigation, not mouse clicks */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid #818cf8;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -37,6 +48,51 @@ input, textarea, button, select {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #6366f1;
+}
+
+/* ── Hero ── */
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 140px 5% 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-layout {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+}
+
+.hero-content {
+  text-align: center;
+}
+
+.hero-subtitle {
+  margin: 0 auto 52px;
+}
+
+.hero-badge-row,
+.hero-btn-row {
+  justify-content: center;
+}
+
+.hero-stats-row {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  margin: 24px auto 0;
+  width: 100%;
+  border-top: 1px solid #141414;
+  padding-top: 24px;
+  display: flex;
+  justify-content: center;
 }
 
 /* ── Nav ── */
@@ -62,6 +118,11 @@ input, textarea, button, select {
   padding: 100px 5%;
 }
 
+/* Subtle alternating tint so consecutive sections don't blend into one flat block */
+.section-alt {
+  background: #0c0c0f;
+}
+
 /* ── About section ── */
 .about-layout {
   display: grid;
@@ -82,30 +143,83 @@ input, textarea, button, select {
   text-underline-offset: 10px;
 }
 
-/* ── Process Timeline ── */
-.process-grid {
-  display: grid;
-  grid-template-columns: 1fr 80px 1fr;
-  row-gap: 56px;
-}
-.process-slot-left {
+/* ── Process — 5-step horizontal row ── */
+.process-row {
+  position: relative;
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding-right: 40px;
+  justify-content: space-between;
+  gap: 24px;
 }
-.process-slot-center {
+.process-row-line {
+  position: absolute;
+  top: 34px;
+  left: 34px;
+  right: 34px;
+  height: 0;
+  border-top: 2px dashed rgba(99, 102, 241, 0.35);
+  z-index: 1;
+}
+.process-node {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  text-align: center;
+  min-width: 0;
+}
+.process-node-desc {
+  margin: 0 auto;
+  max-width: 190px;
+}
+.process-node-icon {
+  position: relative;
+  width: 68px;
+  height: 68px;
+  margin: 0 auto;
+  border-radius: 50%;
+  background: #0d0d0d;
+  border: 1px solid rgba(99, 102, 241, 0.35);
+  box-shadow: 0 0 0 6px #0a0a0a, 0 0 24px rgba(99, 102, 241, 0.15);
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
-  z-index: 2;
+  font-size: 24px;
 }
-.process-slot-right {
+.process-node-number {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6366f1 0%, #818cf8 100%);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  padding-left: 40px;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.5);
+}
+
+/* ── CTA banner ── */
+.cta-banner-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.cta-banner-copy {
+  flex: 1;
+  min-width: 240px;
+}
+
+/* ── Footer columns ── */
+.footer-columns {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr 1.2fr;
+  gap: 32px;
+  margin-bottom: 0;
 }
 
 /* ── Services grid ── */
@@ -115,39 +229,17 @@ input, textarea, button, select {
   gap: 24px;
 }
 
-/* ── CTA Banner ── */
-.cta-banner {
-  margin: 0 5% 80px;
-  border-radius: 20px;
-  padding: 60px 48px;
-  text-align: center;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-  border: 1px solid #2a2a5a;
-}
-
-/* ── Footer ── */
-.site-footer {
-  border-top: 1px solid #141414;
-  padding: 28px 5%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 14px;
-}
-
 /* ─────────────────────────────────────
    TABLET  ≤ 900px
 ───────────────────────────────────── */
 @media (max-width: 900px) {
-  .about-content-grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-
   .about-layout {
     grid-template-columns: 1fr;
     gap: 48px;
+  }
+
+  .footer-columns {
+    grid-template-columns: 1fr 1fr 1fr;
   }
 }
 
@@ -167,25 +259,52 @@ input, textarea, button, select {
     padding: 72px 5%;
   }
 
-  .cta-banner {
-    padding: 40px 28px;
-    margin: 0 4% 60px;
+  .hero-section {
+    padding: 120px 5% 48px;
   }
 
-  /* Process timeline collapses to single column */
-  .process-grid {
-    grid-template-columns: 1fr;
-    row-gap: 20px;
+  .hero-stats-row {
+    gap: 32px;
   }
-  .process-slot-center,
-  .process-slot-left:empty,
-  .process-slot-right:empty {
-    display: none;
+
+  /* Process row collapses to a single stacked column, line goes vertical */
+  .process-row {
+    flex-direction: column;
+    gap: 36px;
   }
-  .process-slot-left,
-  .process-slot-right {
-    justify-content: flex-start;
-    padding: 0;
+  .process-row-line {
+    top: 0;
+    bottom: 0;
+    left: 34px;
+    right: auto;
+    width: 0;
+    height: auto;
+    border-top: none;
+    border-left: 2px dashed rgba(99, 102, 241, 0.35);
+  }
+  .process-node {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    text-align: left;
+  }
+  .process-node-icon {
+    margin: 0;
+    flex-shrink: 0;
+  }
+  .process-node-desc {
+    margin: 0;
+    max-width: none;
+  }
+
+  .footer-columns {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px 24px;
+  }
+
+  .cta-banner-row {
+    justify-content: center;
+    text-align: center;
   }
 }
 
@@ -201,23 +320,8 @@ input, textarea, button, select {
     grid-template-columns: 1fr;
   }
 
-  .cta-banner {
-    padding: 32px 20px;
-    border-radius: 14px;
-  }
-
-  .site-footer {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
-
-/* ─────────────────────────────────────
-   EXTRA SMALL  ≤ 400px
-───────────────────────────────────── */
-@media (max-width: 400px) {
-  .cta-banner {
-    margin: 0 0 48px;
-    border-radius: 0;
+  .footer-columns {
+    grid-template-columns: 1fr;
+    gap: 36px;
   }
 }

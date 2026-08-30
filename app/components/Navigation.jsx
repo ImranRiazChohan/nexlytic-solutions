@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import Link from "next/link";
+import Logo from "./Logo";
 
 export default function Navigation({ scrollTo }) {
   const navRef = useRef(null);
@@ -57,25 +58,18 @@ export default function Navigation({ scrollTo }) {
           <Link
             href="/"
             className="nav-logo"
-            style={{
-              fontSize: 22, fontWeight: 900,
-              background: "linear-gradient(135deg, #6366f1 0%, #a78bfa 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-              textDecoration: "none", cursor: "pointer",
-              letterSpacing: "-0.5px",
-            }}
+            style={{ textDecoration: "none", cursor: "pointer" }}
           >
-            Nexlytic
+            <Logo size={32} />
           </Link>
 
           {/* Desktop nav */}
           <div className="desktop-nav">
             {[
               { label: "Services", id: "services" },
-              { label: "Why Us", id: "why" },
               { label: "Process", id: "process" },
+              { label: "Why Us", id: "why" },
+              { label: "About", id: "about" },
             ].map(({ label, id }) => (
               <button
                 key={id}
@@ -142,8 +136,9 @@ export default function Navigation({ scrollTo }) {
         >
           {[
             { label: "Services", id: "services" },
-            { label: "Why Us", id: "why" },
             { label: "Process", id: "process" },
+            { label: "Why Us", id: "why" },
+            { label: "About", id: "about" },
             { label: "Contact", id: "contact" },
           ].map(({ label, id }) => (
             <button

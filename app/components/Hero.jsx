@@ -3,12 +3,7 @@ import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import ParticleCanvas from "./ParticleCanvas";
-
-const STATS = [
-  { value: "50+", label: "Projects Delivered" },
-  { value: "3+", label: "Years of Experience" },
-  { value: "98%", label: "Client Satisfaction" },
-];
+import TechStack from "./TechStack";
 
 export default function Hero({ scrollTo }) {
   const badgeRef = useRef(null);
@@ -16,8 +11,7 @@ export default function Hero({ scrollTo }) {
   const subRef = useRef(null);
   const btn1Ref = useRef(null);
   const btn2Ref = useRef(null);
-  const trustRef = useRef(null);
-  const statRefs = useRef([]);
+  const techRef = useRef(null);
   const orb1Ref = useRef(null);
   const orb2Ref = useRef(null);
   const orb3Ref = useRef(null);
@@ -31,10 +25,7 @@ export default function Hero({ scrollTo }) {
       .from([btn1Ref.current, btn2Ref.current].filter(Boolean), {
         opacity: 0, y: 24, stagger: 0.15, duration: 0.7,
       }, "-=0.5")
-      .from(trustRef.current, { opacity: 0, y: 16, duration: 0.6 }, "-=0.3")
-      .from(statRefs.current.filter(Boolean), {
-        opacity: 0, y: 20, stagger: 0.12, duration: 0.5,
-      }, "-=0.1");
+      .from(techRef.current, { opacity: 0, y: 20, duration: 0.6 }, "-=0.3");
 
     // Floating orbs
     gsap.to(orb1Ref.current, {
@@ -52,17 +43,7 @@ export default function Hero({ scrollTo }) {
   });
 
   return (
-    <section
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "60px 5%",
-        position: "relative",
-        overflow: "hidden",
-      }}
-    >
+    <section className="hero-section">
       {/* Background orbs */}
       <div
         ref={orb1Ref}
@@ -107,169 +88,127 @@ export default function Hero({ scrollTo }) {
       {/* Particle network — floats above grid, behind content */}
       <ParticleCanvas count={72} connected mouseRepel particleOpacity={0.75} />
 
-      <div style={{ maxWidth: 900, textAlign: "center", zIndex: 2, width: "100%" }}>
-        {/* Badge */}
-        <div
-          ref={badgeRef}
-          style={{
-            display: "inline-flex", alignItems: "center", gap: 9,
-            background: "rgba(255,255,255,0.04)",
-            border: "1px solid rgba(255,255,255,0.08)",
-            borderRadius: 100, padding: "9px 20px",
-            fontSize: 13, color: "#888", marginBottom: 32, fontWeight: 500,
-          }}
-        >
-          <span
+      <div className="hero-layout">
+        <div className="hero-content">
+          {/* Badge */}
+          <div
+            ref={badgeRef}
+            className="hero-badge-row"
             style={{
-              width: 8, height: 8, borderRadius: "50%",
-              background: "#6366f1",
-              boxShadow: "0 0 10px rgba(99,102,241,0.8)",
-              display: "inline-block",
-            }}
-          />
-          Digital Solutions for Modern Businesses
-        </div>
-
-        {/* Headline */}
-        <h1
-          ref={titleRef}
-          style={{
-            fontSize: "clamp(2rem, 5vw, 3.6rem)",
-            fontWeight: 800, color: "#ffffff",
-            letterSpacing: "-1.5px", lineHeight: 1.12, marginBottom: 24,
-          }}
-        >
-          A Technical Catalyst for{" "}
-          <span
-            style={{
-              background: "linear-gradient(135deg, #6366f1 0%, #a78bfa 60%, #818cf8 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
+              display: "inline-flex", alignItems: "center", gap: 9,
+              background: "rgba(255,255,255,0.04)",
+              border: "1px solid rgba(255,255,255,0.08)",
+              borderRadius: 100, padding: "9px 20px",
+              fontSize: 13, color: "#888", marginBottom: 32, fontWeight: 500,
             }}
           >
-            Thoughtful Digital Experiences
-          </span>
-        </h1>
+            <span
+              style={{
+                width: 8, height: 8, borderRadius: "50%",
+                background: "#6366f1",
+                boxShadow: "0 0 10px rgba(99,102,241,0.8)",
+                display: "inline-block",
+              }}
+            />
+            Web, Mobile & AI Development Studio
+          </div>
 
-        {/* Subtitle */}
-        <p
-          ref={subRef}
-          style={{
-            fontSize: 17, color: "#909090",
-            maxWidth: 680, lineHeight: 1.8,
-            margin: "0 auto 52px",
-          }}
-        >
-          We close the gap between &ldquo;what is&rdquo; and &ldquo;what could be&rdquo; — building intelligent
-          digital products that connect and convert through strategic thinking and creative execution.
-        </p>
-
-        {/* Buttons */}
-        <div
-          style={{
-            display: "flex", gap: 16, justifyContent: "center",
-            flexWrap: "wrap", marginBottom: 52,
-          }}
-        >
-          <button
-            ref={btn1Ref}
-            onClick={() => scrollTo("contact")}
+          {/* Headline */}
+          <h1
+            ref={titleRef}
             style={{
-              background: "linear-gradient(135deg, #6366f1 0%, #818cf8 100%)",
-              color: "#fff", border: "none", borderRadius: 12,
-              padding: "16px 44px", fontSize: 15, fontWeight: 700,
-              cursor: "pointer",
-              boxShadow: "0 12px 40px rgba(99,102,241,0.4)",
-              transition: "all 0.3s ease", letterSpacing: "-0.3px",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "translateY(-3px)";
-              e.currentTarget.style.boxShadow = "0 20px 60px rgba(99,102,241,0.55)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = "translateY(0)";
-              e.currentTarget.style.boxShadow = "0 12px 40px rgba(99,102,241,0.4)";
+              fontSize: "clamp(2rem, 4.6vw, 3.6rem)",
+              fontWeight: 800, color: "#ffffff",
+              letterSpacing: "-1.5px", lineHeight: 1.12, marginBottom: 24,
             }}
           >
-            Start a Project
-          </button>
-          <button
-            ref={btn2Ref}
-            onClick={() => scrollTo("services")}
+            We Build Web, Mobile &{" "}
+            <span
+              style={{
+                background: "linear-gradient(135deg, #6366f1 0%, #a78bfa 60%, #818cf8 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
+              AI Products That Work
+            </span>
+          </h1>
+
+          {/* Subtitle */}
+          <p
+            ref={subRef}
+            className="hero-subtitle"
             style={{
-              background: "rgba(255,255,255,0.05)",
-              color: "#d0d0d0",
-              border: "1px solid rgba(255,255,255,0.18)",
-              borderRadius: 12, padding: "16px 44px",
-              fontSize: 15, fontWeight: 600,
-              cursor: "pointer", transition: "all 0.3s ease",
-              letterSpacing: "-0.3px",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = "rgba(99,102,241,0.15)";
-              e.currentTarget.style.borderColor = "rgba(99,102,241,0.5)";
-              e.currentTarget.style.color = "#fff";
-              e.currentTarget.style.transform = "translateY(-3px)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = "rgba(255,255,255,0.05)";
-              e.currentTarget.style.borderColor = "rgba(255,255,255,0.18)";
-              e.currentTarget.style.color = "#d0d0d0";
-              e.currentTarget.style.transform = "translateY(0)";
+              fontSize: 17, color: "#909090",
+              maxWidth: 640, lineHeight: 1.8,
             }}
           >
-            View Our Work
-          </button>
-        </div>
+            Nexlytics Solutions is a development studio that designs and builds websites,
+            mobile apps, and AI-powered tools for businesses anywhere in the world that
+            need software done right the first time.
+          </p>
 
-        {/* Trust indicator */}
-        <div
-          ref={trustRef}
-          style={{
-            display: "flex", alignItems: "center", justifyContent: "center",
-            gap: 10, color: "#505050", fontSize: 13, marginBottom: 64,
-          }}
-        >
-          <span
-            style={{
-              width: 10, height: 10, borderRadius: "50%",
-              background: "#4ade80",
-              boxShadow: "0 0 12px rgba(74,222,128,0.6)",
-              display: "inline-block",
-            }}
-          />
-          Available for new projects · Fast response · Flexible engagements
-        </div>
-
-        {/* Stats */}
-        <div
-          style={{
-            display: "flex", gap: 48, justifyContent: "center",
-            flexWrap: "wrap",
-            borderTop: "1px solid #141414", paddingTop: 44,
-          }}
-        >
-          {STATS.map((stat, i) => (
-            <div key={i} ref={(el) => { statRefs.current[i] = el; }} style={{ textAlign: "center" }}>
-              <div
+          {/* Buttons */}
+          <div className="hero-btn-row" style={{ display: "flex", gap: 16, flexWrap: "wrap", marginBottom: 56 }}>
+            <div ref={btn1Ref}>
+              <button
+                onClick={() => scrollTo("contact")}
                 style={{
-                  fontSize: "clamp(1.8rem, 3.5vw, 2.4rem)",
-                  fontWeight: 900, letterSpacing: "-1.5px",
-                  background: "linear-gradient(135deg, #fff 0%, #6366f1 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
+                  background: "linear-gradient(135deg, #6366f1 0%, #818cf8 100%)",
+                  color: "#fff", border: "none", borderRadius: 12,
+                  padding: "16px 44px", fontSize: 15, fontWeight: 700,
+                  cursor: "pointer",
+                  boxShadow: "0 12px 40px rgba(99,102,241,0.4)",
+                  transition: "all 0.3s ease", letterSpacing: "-0.3px",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "translateY(-3px)";
+                  e.currentTarget.style.boxShadow = "0 20px 60px rgba(99,102,241,0.55)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "translateY(0)";
+                  e.currentTarget.style.boxShadow = "0 12px 40px rgba(99,102,241,0.4)";
                 }}
               >
-                {stat.value}
-              </div>
-              <div style={{ fontSize: 13, color: "#505050", marginTop: 6, letterSpacing: "0.02em" }}>
-                {stat.label}
-              </div>
+                Start a Project
+              </button>
             </div>
-          ))}
+            <div ref={btn2Ref}>
+              <button
+                onClick={() => scrollTo("services")}
+                style={{
+                  background: "rgba(255,255,255,0.05)",
+                  color: "#d0d0d0",
+                  border: "1px solid rgba(255,255,255,0.18)",
+                  borderRadius: 12, padding: "16px 44px",
+                  fontSize: 15, fontWeight: 600,
+                  cursor: "pointer", transition: "all 0.3s ease",
+                  letterSpacing: "-0.3px",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = "rgba(99,102,241,0.15)";
+                  e.currentTarget.style.borderColor = "rgba(99,102,241,0.5)";
+                  e.currentTarget.style.color = "#fff";
+                  e.currentTarget.style.transform = "translateY(-3px)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = "rgba(255,255,255,0.05)";
+                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.18)";
+                  e.currentTarget.style.color = "#d0d0d0";
+                  e.currentTarget.style.transform = "translateY(0)";
+                }}
+              >
+                See Our Services
+              </button>
+            </div>
+          </div>
         </div>
+      </div>
+
+      {/* Tech stack row */}
+      <div ref={techRef} className="hero-stats-row">
+        <TechStack />
       </div>
     </section>
   );

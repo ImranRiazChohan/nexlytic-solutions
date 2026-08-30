@@ -1,0 +1,47 @@
+import { useId } from "react";
+
+export default function LogoIcon({ size = 32 }) {
+  const uid = useId();
+  const g1 = `${uid}-lg1`;
+  const g2 = `${uid}-lg2`;
+  const g3 = `${uid}-lg3`;
+  const g4 = `${uid}-lg4`;
+
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" aria-hidden="true">
+      <defs>
+        <linearGradient id={g1} x1="7.52" y1="21.89" x2="7.52" y2="11.53" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#3e66b0" />
+          <stop offset=".99" stopColor="#283174" />
+        </linearGradient>
+        <linearGradient id={g2} x1="3.65" y1="7.82" x2="18.37" y2="15.55" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#3e66b0" />
+          <stop offset="1" stopColor="#6056a5" />
+        </linearGradient>
+        <linearGradient id={g3} x1="430.64" y1="-329.09" x2="430.64" y2="-318.73" gradientTransform="translate(455.27 -307.59) rotate(-180)" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#2c2974" />
+          <stop offset=".99" stopColor="#7652a2" />
+        </linearGradient>
+        <linearGradient id={g4} x1="10.35" y1="14.8" x2="27.85" y2="23.99" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#47429a" />
+          <stop offset="1" stopColor="#93509f" />
+        </linearGradient>
+      </defs>
+      <rect fill="#11122b" x=".44" y=".44" width="31.12" height="31.12" rx="4.89" ry="4.89" />
+      <path fill={`url(#${g1})`} d="M10.02,10.85v10.54c0,.26-.21.47-.48.47h-2.03c-.26,0-.48-.21-.48-.47v-2.06c-.53-.2-1.02-.59-1.48-1.05-.37-.47-.5-1.05-.54-1.66v-1.09c.31-1.42.73-2.57,1.32-3.35.54-.76,1.23-1.27,2.12-1.44.52-.09,1.04-.05,1.56.12Z" />
+      <path fill={`url(#${g2})`} d="M5.02,15.68c-.02-.86,0-1.72,0-2.58v-4.41c0-.84-.04-1.61.29-2.4.78-1.93,3.19-2.86,5.09-2.06.85.36,1.51,1.06,2.2,1.66l1.62,1.39,3.78,3.25c.66.57,1.35,1.16,2.02,1.74.59.51,1.19.97,1.25,1.81v4.04c0,.45-.25.7-.68.81-.49.07-.98-.25-1.47-.69l-.85-.73-2.02-1.73c-.8-.68-1.59-1.36-2.39-2.05-.64-.51-1.25-1.06-1.87-1.6-.54-.47-1.08-.98-1.77-1.23-.75-.28-1.67-.3-2.42.03-.68.3-1.21.85-1.6,1.46-.02.04-.05.07-.07.11-.52.85-.84,1.83-1.03,2.8-.02.12-.06.24-.07.36Z" />
+      <path fill={`url(#${g3})`} d="M22.13,21.3v-10.54c0-.26.21-.47.48-.47h2.03c.26,0,.48.21.48.47v2.06c.53.2,1.02.59,1.48,1.05.37.47.5,1.05.54,1.66v1.09c-.31,1.42-.73,2.57-1.32,3.35-.54.76-1.23,1.27-2.12,1.44-.52.09-1.04.05-1.56-.12Z" />
+      <path fill={`url(#${g4})`} d="M27.13,16.47c.02.86,0,1.72,0,2.58v4.41c0,.84.04,1.61-.29,2.4-.78,1.93-3.19,2.86-5.09,2.06-.85-.36-1.51-1.06-2.2-1.66l-1.62-1.39-3.78-3.25c-.66-.57-1.35-1.16-2.02-1.74-.59-.51-1.19-.97-1.25-1.81v-4.04c0-.45.25-.7.68-.81.49-.07.98.25,1.47.69l.85.73,2.02,1.73c.8.68,1.59,1.36,2.39,2.05.64.51,1.25,1.06,1.87,1.6.54.47,1.08.98,1.77,1.23.75.28,1.67.3,2.42-.03.68-.3,1.21-.85,1.6-1.46.02-.04.05-.07.07-.11.52-.85.84-1.83,1.03-2.8.02-.12.06-.24.07-.36Z" />
+      <rect fill="#7451a1" x="23.89" y="6.27" width="2.04" height="2.04" />
+      <rect fill="#7451a1" x="26.13" y="8.65" width="1.52" height="1.52" />
+      <rect fill="#7451a1" x="27.13" y="6.56" width="1.03" height="1.03" />
+      <rect fill="#7451a1" x="22.24" y="4.48" width="1.03" height="1.03" />
+      <rect fill="#7451a1" x="25.43" y="3.78" width="1.39" height="1.39" />
+      <rect fill="#406db5" x="6.08" y="23.39" width="2.04" height="2.04" transform="translate(14.19 48.82) rotate(-180)" />
+      <rect fill="#406db5" x="4.35" y="21.54" width="1.52" height="1.52" transform="translate(10.22 44.59) rotate(-180)" />
+      <rect fill="#406db5" x="3.84" y="24.11" width="1.03" height="1.03" transform="translate(8.71 49.25) rotate(-180)" />
+      <rect fill="#406db5" x="8.73" y="26.19" width="1.03" height="1.03" transform="translate(18.48 53.41) rotate(-180)" />
+      <rect fill="#406db5" x="5.18" y="26.53" width="1.39" height="1.39" transform="translate(11.74 54.44) rotate(-180)" />
+    </svg>
+  );
+}
